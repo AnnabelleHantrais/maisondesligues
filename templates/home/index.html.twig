@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Accueil - Maison des Langues{% endblock %}
+
+{% block body %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('Styles.css') }}">
+    {% endblock %}
+
+    <body>
+        <header>
+            <img src="images/Mdl.png" alt="Logo MDL" id="logo-mdl" />
+            <nav>
+                <ul>
+                    <li><a href="#congres">Le Congrès</a></li>
+                    <li><a href="#ateliers">Ateliers</a></li>
+                    <li><a href="#hebergement">Hébergement</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="congres">
+            <h2>Dates du Congrès</h2>
+            <p>Le congrès se tiendra du 20 au 23 octobre 2024.</p>
+        </section>
+
+        <section id="ateliers">
+            <h2>Ateliers Proposés</h2>
+            <!-- Exemple d'atelier -->
+            <div class="atelier">
+                <h3>Atelier 1: L'avenir des langues</h3>
+                <p>Thème: Technologies et langues</p>
+                <p>Vacation: 21 octobre, 10h-12h</p>
+            </div>
+            <!-- Ajoutez d'autres ateliers ici -->
+        </section>
+
+        <section id="hebergement">
+            <h2>Options d'Hébergement</h2>
+            <!-- Exemple d'option d'hébergement -->
+            <div class="hebergement">
+                <h3>Hotel LangueVille</h3>
+                <p>Prix: 100€ par nuit</p>
+                <p>Distance: 500m du lieu du congrès</p>
+            </div>
+            <!-- Ajoutez d'autres options d'hébergement ici -->
+        </section>
+
+        <footer>
+            <p>Contactez-nous: contact@mdl.com</p>
+        </footer>
+    </body>
+{% endblock %}
