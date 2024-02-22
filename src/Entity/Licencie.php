@@ -29,13 +29,15 @@ class Licencie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse2 = null;
 
-    #[ORM\Column(length: 6)]
+    #[ORM\Column(length: 5,  options: [
+    "fixed" => true])]
     private ?string $cp = null;
 
     #[ORM\Column(length: 70)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 14, nullable: true)]
+    #[ORM\Column(length: 14, options: [
+    "fixed" => true], nullable: true)]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
