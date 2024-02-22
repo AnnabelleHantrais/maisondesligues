@@ -20,6 +20,9 @@ class Restauration
     #[ORM\Column(length: 100)]
     private ?string $typeRepas = null;
 
+    #[ORM\ManyToOne(inversedBy: 'restaurations')]
+    private ?Inscription $inscription = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Restauration
     public function setTypeRepas(string $typeRepas): static
     {
         $this->typeRepas = $typeRepas;
+
+        return $this;
+    }
+
+    public function getInscription(): ?Inscription
+    {
+        return $this->inscription;
+    }
+
+    public function setInscription(?Inscription $inscription): static
+    {
+        $this->inscription = $inscription;
 
         return $this;
     }

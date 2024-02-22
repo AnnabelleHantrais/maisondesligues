@@ -16,11 +16,14 @@ class Proposer
     #[ORM\Column]
     private ?float $tarifNuite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tarifs')]
+    #[ORM\ManyToOne( targetEntity: Hotel::class, inversedBy: 'tarifs')]
     private ?Hotel $hotel = null;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     private ?CategorieChambre $categorie = null;
+    
+    
+
 
     public function getId(): ?int
     {
