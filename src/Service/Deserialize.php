@@ -7,6 +7,7 @@ use App\Entity\Licencie;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use \App\Entity\Club;
 
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -21,26 +22,19 @@ class Deserialize
          
     public function getLicencie($id):Licencie
     {
-        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$id);
-        $responseContent = $json->getContent();
-        $array = json_decode($responseContent, true);
-        dump($array);
-        $array['numlicence'] = strval($array['numlicence']);
-        
-        $json2= json_encode($array);
-        dump($json2); // l'id est encore là
-        $licencie = $this->serializer->deserialize($json2, Licencie::class, 'json');
+        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$id); //url test
+        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'.$id); 
+        $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
 
         return $licencie;
     }
     
-     public function getClub($id ): \App\Entity\Club
+     public function getClub($id ): Club
     {
-        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/club/'.$id);
-        $responseContent = $json->getContent();
-        $array = json_decode($responseContent, true);
-        $json2= json_encode($array);
-        $licencie = $this->serializer->deserialize($json2, Club::class, 'json');
+        //$json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/club/'.$id); //url test
+         
+        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/club/'.$id);
+        $licencie = $this->serializer->deserialize($json->getContent(), Club::class, 'json');
 
         return $licencie;
     }

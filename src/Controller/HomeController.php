@@ -23,22 +23,18 @@ class HomeController extends AbstractController
         ]);
     }
     
-    
-    
+
     #[Route('/licencies/{id}', name: 'app_licencies_id')]     
     public function getLicencie($id , Deserialize $des):Response
     {
        $licencie = $des->getLicencie($id);
-       dump($licencie);
-       return new Response($licencie->getId());
-       
+       return new Response($licencie->getId());  
     }
     
     #[Route('/club/{id}', name: 'app_club_id')]     
-    public function geClub($id , Deserialize $des):Response
+    public function getClub($id , Deserialize $des):Response
     {
        $club = $des->getClub($id);
        return new Response($club->getNom());
-       
     }
 }
