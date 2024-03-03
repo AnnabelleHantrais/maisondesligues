@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\HotelRepository;
+use App\Entity\Atelier;
+use App\Repository\AtelierRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Hotel;
 
@@ -61,4 +63,18 @@ class HomeController extends AbstractController {
      * 
      * 
      */
+    
+    #[Route('/ateliers', name: 'app_ateliers')]
+    public function displayAteliers(ManagerRegistry $doctrine): Response {
+        
+        $ateliers = $doctrine
+                ->getRepository(Atelier::class)
+                ->findAll();
+
+        return $this->render('home/ateliers.html.twig', [
+                    'controller_name' => 'HomeController',
+                    'ateliers' => $ateliers
+        ]);
+    }
+    
 }

@@ -1,0 +1,21 @@
+{# templates/home/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Ateliers</h1>
+    
+    {% for atelier in ateliers %}
+        
+        <div>
+            <h3>{{atelier.id}} {{ atelier.libelle }}</h3>
+            {% for theme in atelier.themes%}
+            <div>
+                {{ theme.libelle }}
+            </div>
+            {%  endfor %}
+
+        </div>
+        
+    {% endfor %}
+{% endblock %}
