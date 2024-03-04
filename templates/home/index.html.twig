@@ -1,35 +1,65 @@
 {# templates/home/index.html.twig #}
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Accueil - Maison des Langues</title>
+        <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    </head>
+    <body>
+        <header>
+            <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl">
+            <nav>
+                <ul>
+                    <li><a href="#congres">Le Congrès</a></li>
+                    <li><a href="#ateliers">Ateliers</a></li>
+                    <li><a href="#hebergement">Hébergement</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
 
-{% block title %}Accueil - Maison des Langues{% endblock %}
+        <section id="congres">
+            <h2>Dates du Congrès</h2>
+            <p>Le congrès se tiendra du 20 au 23 octobre 2024.</p>
+        </section>
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles.css') }}">
-{% endblock %}
-
-{% block body %}
-    <section id="hebergement">
-        <h2>Options d'Hébergement</h2>
-        {% for hotel in hotels %}
-            <div class="hotel-card">
-                <h3>{{ hotel.pnom }}</h3>
-                {% if chambresEtTarifs[hotel.id] is defined %}
-                    {% for tarifInfo in chambresEtTarifs[hotel.id] %}
-                        <div class="categorie-chambre">
-                            <h4>{{ tarifInfo.libelleCategorie }}</h4>
-                            <p>Tarif: {{ tarifInfo.tarifNuite }} € par nuit</p>
+        <section id="ateliers">
+            <h1>Ateliers</h1>
+            {% for atelier in ateliers %}
+                <div>
+                    <h3>{{ atelier.id }} {{ atelier.libelle }}</h3>
+                    {% for theme in atelier.themes %}
+                        <div>
+                            {{ theme.libelle }}
                         </div>
                     {% endfor %}
+                </div>
+            {% endfor %}
+        </section>
 
-                {% else %}
-                    <p>Aucune information sur les chambres et tarifs disponible pour cet hôtel.</p>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </section>
+        <section id="hebergement">
+            <h2>Options d'Hébergement</h2>
+            {% for hotel in hotels %}
+                <div class="hotel-card">
+                    <h3>{{ hotel.pnom }}</h3>
+                    {% if chambresEtTarifs[hotel.id] is defined %}
+                        {% for tarifInfo in chambresEtTarifs[hotel.id] %}
+                            <div class="categorie-chambre">
+                                <h4>{{ tarifInfo.libelleCategorie }}</h4>
+                                <p>Tarif: {{ tarifInfo.tarifNuite }} € par nuit</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucune information sur les chambres et tarifs disponible pour cet hôtel.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </section>
 
-    <footer>
-        <p>Contactez-nous: contact@mdl.com</p>
-    </footer>
-{% endblock %}
+        <footer>
+            <p>Contactez-nous: contact@mdl.com</p>
+        </footer>
+    </body>
+</html>
