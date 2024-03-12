@@ -8,8 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorieChambreRepository::class)]
-class CategorieChambre
-{
+class CategorieChambre {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,23 +21,21 @@ class CategorieChambre
     #[ORM\OneToMany(targetEntity: Proposer::class, mappedBy: 'categorie')]
     private Collection $tarifs;
 
-    public function __construct()
-    {
+    
+
+    public function __construct() {
         $this->tarifs = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getLibelleCategorie(): ?string
-    {
+    public function getLibelleCategorie(): ?string {
         return $this->libelleCategorie;
     }
 
-    public function setLibelleCategorie(string $libelleCategorie): static
-    {
+    public function setLibelleCategorie(string $libelleCategorie): static {
         $this->libelleCategorie = $libelleCategorie;
 
         return $this;
@@ -46,13 +44,11 @@ class CategorieChambre
     /**
      * @return Collection<int, Proposer>
      */
-    public function getTarifs(): Collection
-    {
+    public function getTarifs(): Collection {
         return $this->tarifs;
     }
 
-    public function addTarif(Proposer $tarif): static
-    {
+    public function addTarif(Proposer $tarif): static {
         if (!$this->tarifs->contains($tarif)) {
             $this->tarifs->add($tarif);
             $tarif->setCategorie($this);
@@ -61,8 +57,7 @@ class CategorieChambre
         return $this;
     }
 
-    public function removeTarif(Proposer $tarif): static
-    {
+    public function removeTarif(Proposer $tarif): static {
         if ($this->tarifs->removeElement($tarif)) {
             // set the owning side to null (unless already changed)
             if ($tarif->getCategorie() === $this) {

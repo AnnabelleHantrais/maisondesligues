@@ -1,0 +1,32 @@
+{# templates/home/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails des Hôtels{% endblock %}
+
+{% block body %}
+    <h1>Chambres et Tarifs des Hôtels</h1>
+    
+    {% for hotel in hotels %}
+        <div class="hotel-details">
+            <h2>{{ hotel.pnom }}</h2>
+            <p>Adresse: {{ hotel.adresse1 }} {{ hotel.adresse2 }}</p>
+            <p>Ville: {{ hotel.ville }}, {{ hotel.cp }}</p>
+            <p>Téléphone: {{ hotel.tel }}</p>
+            <p>Email: <a href="mailto:{{ hotel.mail }}">{{ hotel.mail }}</a></p>
+
+            {% if chambresEtTarifs[hotel.id] is defined %}
+                <div class="chambres-tarifs">
+                    <h3>Chambres et Tarifs:</h3>
+                    {% for tarif in chambresEtTarifs[hotel.id] %}
+                        <div>
+                            <h4>{{ tarif.categorieChambre.libelleCategorie }}</h4>
+                            <p>Tarif par nuit: {{ tarif.tarifNuite }}€</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucune information sur les chambres et tarifs disponible pour cet hôtel.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

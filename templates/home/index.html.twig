@@ -1,16 +1,15 @@
-{% extends 'base.html.twig' %}
-
-
-{% block title %}Accueil - Maison des Langues{% endblock %}
-
-{% block body %}
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('Styles.css') }}">
-    {% endblock %}
-
+{# templates/home/index.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Accueil - Maison des Langues</title>
+        <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    </head>
     <body>
         <header>
-            <img src=" {{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl" />
+            <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl">
             <nav>
                 <ul>
                     <li><a href="#congres">Le Congrès</a></li>
@@ -27,29 +26,40 @@
         </section>
 
         <section id="ateliers">
-            <h2>Ateliers Proposés</h2>
-            <!-- Exemple d'atelier -->
-            <div class="atelier">
-                <h3>Atelier 1: L'avenir des langues</h3>
-                <p>Thème: Technologies et langues</p>
-                <p>Vacation: 21 octobre, 10h-12h</p>
-            </div>
-            <!-- Ajoutez d'autres ateliers ici -->
+            <h1>Ateliers</h1>
+            {% for atelier in ateliers %}
+                <div>
+                    <h3>{{ atelier.id }} {{ atelier.libelle }}</h3>
+                    {% for theme in atelier.themes %}
+                        <div>
+                            {{ theme.libelle }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </section>
 
         <section id="hebergement">
             <h2>Options d'Hébergement</h2>
-            <!-- Exemple d'option d'hébergement -->
-            <div class="hebergement">
-                <h3>Hotel LangueVille</h3>
-                <p>Prix: 100€ par nuit</p>
-                <p>Distance: 500m du lieu du congrès</p>
-            </div>
-            <!-- Ajoutez d'autres options d'hébergement ici -->
+            {% for hotel in hotels %}
+                <div class="hotel-card">
+                    <h3>{{ hotel.pnom }}</h3>
+                    {% if chambresEtTarifs[hotel.id] is defined %}
+                        {% for tarifInfo in chambresEtTarifs[hotel.id] %}
+                            <div class="categorie-chambre">
+                                <h4>{{ tarifInfo.libelleCategorie }}</h4>
+                                <p>Tarif: {{ tarifInfo.tarifNuite }} € par nuit</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucune information sur les chambres et tarifs disponible pour cet hôtel.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </section>
 
         <footer>
             <p>Contactez-nous: contact@mdl.com</p>
         </footer>
     </body>
-{% endblock %}
+</html>

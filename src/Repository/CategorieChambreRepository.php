@@ -14,10 +14,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CategorieChambre[]    findAll()
  * @method CategorieChambre[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategorieChambreRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class CategorieChambreRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, CategorieChambre::class);
     }
 
@@ -35,7 +34,6 @@ class CategorieChambreRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?CategorieChambre
 //    {
 //        return $this->createQueryBuilder('c')
@@ -45,4 +43,16 @@ class CategorieChambreRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    public function findCategoriesAvecTarifs($hotelId) {
+        $qb = $this->createQueryBuilder('c');
+
+        $qb->join('c.tarifs', 't')
+                ->where('c.hotel = :hotelId')
+                ->setParameter('hotelId', $hotelId)
+                ->orderBy('c.libelle', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
 }
