@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Vacation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineExtensions\Query\Mysql\Date;
 
 /**
  * @extends ServiceEntityRepository<Vacation>
@@ -48,6 +49,13 @@ class VacationRepository extends ServiceEntityRepository {
     public function findDistinctDateheureDebutAndFin() {
         return $this->createQueryBuilder('v') // 'v' est un alias pour votre entité Vacation
                         ->select('DISTINCT v.dateheureDebut, v.dateheureFin') // Assurez-vous que les noms des propriétés correspondent à ceux de votre entité
+                        ->getQuery()
+                        ->getResult();
+    }
+    
+    public function findDistinctDates() {
+        return $this->createQueryBuilder('v') // 'v' est un alias pour votre entité Vacation
+                        ->select("DISTINCT DATE(v.dateheureDebut)") // Assurez-vous que les noms des propriétés correspondent à ceux de votre entité
                         ->getQuery()
                         ->getResult();
     }

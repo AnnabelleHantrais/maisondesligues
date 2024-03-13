@@ -18,7 +18,7 @@ use App\Repository\AtelierRepository;
 use App\Entity\Hotel;
 use App\Entity\Atelier;
 use App\Repository\VacationRepository;
-
+use DoctrineExtensions\Query\Mysql\Date;
 class HomeController extends AbstractController {
 
 
@@ -36,7 +36,10 @@ class HomeController extends AbstractController {
             $chambresEtTarifs[$hotel->getId()] = $hotelRepository->findChambresEtTarifsParHotel($hotel->getId());
         }
         $vacations = $vacationRepository->findDistinctDateheureDebutAndFin();
-        dump($vacations);
+        $datesvacations = $vacationRepository->findDistinctDates();
+        dump($datesvacations);
+//        dump($vacations);
+//        dump($hotels);
 
         // Rendu du template Twig en passant toutes les données récupérées
         return $this->render('home/index.html.twig', [
@@ -44,7 +47,8 @@ class HomeController extends AbstractController {
                     'hotels' => $hotels,
                     'ateliers' => $ateliers,
                     'chambresEtTarifs' => $chambresEtTarifs,
-                    'vacations' => $vacations
+                    'vacations' => $vacations,
+                'datesvacations' => $datesvacations
         ]);
     }
 
@@ -63,5 +67,4 @@ class HomeController extends AbstractController {
     }
 }
 
-    // Assurez-vous d'avoir une vue ou un autre mécanisme pour afficher ou utiliser les données selon votre cas d'utilisation.
-}
+

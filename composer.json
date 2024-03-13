@@ -7,6 +7,7 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "beberlei/doctrineextensions": "dev-master",
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -28,6 +29,7 @@
         "symfony/twig-bundle": "5.4.*",
         "symfony/yaml": "5.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "3.x-dev",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {

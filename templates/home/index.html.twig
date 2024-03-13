@@ -38,6 +38,21 @@
                 </div>
             {% endfor %}
         </section>
+        
+        <section id="vacations">
+            <h3>Vacations ateliers</h3>
+            {% for datevacation in datesvacations %}
+                <div>{{ datevacation[1]|date('l, d F Y', "Europe/Paris") }}</div>
+                {% for vacation in vacations %} 
+                    {%  if  datevacation[1]|date('Y-m-d') == vacation.dateheureDebut|date('Y-m-d') %}
+                    <div> {{ vacation.dateheureDebut|date('H:i')}} à {{ vacation.dateheureFin|date('H:i')}}</div>
+                    {%  endif %}
+                {% endfor %}
+                
+            {%  endfor %}
+         
+            
+        </section>
 
         <section id="hebergement">
             <h2>Options d'Hébergement</h2>

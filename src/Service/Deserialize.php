@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Service;
-
-
 use App\Entity\Licencie;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
