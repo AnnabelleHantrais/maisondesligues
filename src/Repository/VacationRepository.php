@@ -14,10 +14,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Vacation[]    findAll()
  * @method Vacation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VacationRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class VacationRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Vacation::class);
     }
 
@@ -35,7 +34,6 @@ class VacationRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Vacation
 //    {
 //        return $this->createQueryBuilder('v')
@@ -45,4 +43,12 @@ class VacationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    // Dans votre repository VacationRepository.php
+
+    public function findDistinctDateheureDebutAndFin() {
+        return $this->createQueryBuilder('v') // 'v' est un alias pour votre entité Vacation
+                        ->select('DISTINCT v.dateheureDebut, v.dateheureFin') // Assurez-vous que les noms des propriétés correspondent à ceux de votre entité
+                        ->getQuery()
+                        ->getResult();
+    }
 }
