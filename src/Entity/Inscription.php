@@ -25,6 +25,9 @@ class Inscription
     #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'inscriptions')]
     private Collection $ateliers;
 
+    #[ORM\OneToOne(mappedBy: 'inscription', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->restaurations = new ArrayCollection();
@@ -101,6 +104,23 @@ class Inscription
         if ($this->ateliers->removeElement($atelier)) {
             $atelier->removeInscription($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        // set the owning side of the relation if necessary
+        if ($user->getInscription() !== $this) {
+            $user->setInscription($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
