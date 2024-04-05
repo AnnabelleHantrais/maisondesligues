@@ -1,25 +1,19 @@
-{# templates/home/list.html.twig #}
-{% extends 'base.html.twig' %}
-
-{#
-{% block body %}
-    <h1>Ateliers</h1>
-    <div class="container">
-        <div class='row align-items-start'>
-
-            {% for atelier in ateliers %}
-
-                <div class='col-6'>
-                    <h3>{{atelier.id}} {{ atelier.libelle }}</h3>
-                    {% for theme in atelier.themes%}
-                    <div>
-                        {{ theme.libelle }}
-                    </div>
-                    {%  endfor %}
+{% block ateliers %}
+    <section id="ateliers" >
+            <h3>Ateliers</h3>
+            <div class="container">
+                <div class='row align-items-start gx-3'>
+                    {% for atelier in ateliers %}
+                        <div class='col col-sm-4 gy-3'>
+                            <h4>{{atelier.id}} {{ atelier.libelle }}</h4>
+                            {% for theme in atelier.themes%}
+                                <div>
+                                    {{ theme.libelle }}
+                                </div>
+                            {%  endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
-           {% endfor %}
-        </div>
-    </div>
-{% endblock %}
-
-#}
+            </div>
+        </section>
+{%  endblock %}

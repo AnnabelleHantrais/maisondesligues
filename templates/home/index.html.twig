@@ -1,82 +1,42 @@
-{# templates/home/index.html.twig #}
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Accueil - Maison des Langues</title>
-        <link rel="stylesheet" href="{{ asset('styles.css') }}">
-    </head>
-    <body>
-        <header>
-            <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl">
-            <nav>
-                <ul>
-                    <li><a href="#congres">Le Congrès</a></li>
-                    <li><a href="#ateliers">Ateliers</a></li>
-                    <li><a href="#hebergement">Hébergement</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#inscription">inscription</a></li>
+{% extends 'base.html.twig' %}
 
-                </ul>
-            </nav>
-        </header>
+{%  block body %}
 
-        <section id="congres">
-            <h2>Dates du Congrès</h2>
-            <p>Le congrès se tiendra du 20 au 23 octobre 2024.</p>
+    {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+
+
+
+    <div class='container-img'>
+        <img id="banniere" class='cover align-items-start-' src=" {{ asset('images/fencing.jpg') }} " alt="Deux personnes pratiquant l'escrime.Photo de Eugene Lim sur Unsplash."/>   
+        <section id="congres" class="top-right" >
+            <h2>Assises nationales de l'Escrime</h2>
+            <p>Du 8 au 9 Septembre 2024</p>
         </section>
+    </div>
 
-        <section id="ateliers">
-            <h1>Ateliers</h1>
-            {% for atelier in ateliers %}
-                <div>
-                    <h3>{{ atelier.id }} {{ atelier.libelle }}</h3>
-                    {% for theme in atelier.themes %}
-                        <div>
-                            {{ theme.libelle }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </section>
-        
-        <section id="vacations">
-            <h3>Vacations ateliers</h3>
-            {% for datevacation in datesvacations %}
-                <div>{{ datevacation[1]|date('l, d F Y', "Europe/Paris") }}</div>
-                {% for vacation in vacations %} 
-                    {%  if  datevacation[1]|date('Y-m-d') == vacation.dateheureDebut|date('Y-m-d') %}
-                    <div> {{ vacation.dateheureDebut|date('H:i')}} à {{ vacation.dateheureFin|date('H:i')}}</div>
-                    {%  endif %}
-                {% endfor %}
-                
-            {%  endfor %}
-         
-            
-        </section>
+    <div class='row gx-1'>
+        <div class='col col-lg-9 align-items-center'>
+            {% block ateliers %}
+                {% include('/home/ateliers.html.twig') %}
+            {%  endblock %}
+        </div>
+        <div class='col col-sm-3'>
+            {% block vacations %}
+                {% include('/home/vacations.html.twig') %}
+            {%  endblock %}
 
-        <section id="hebergement">
-            <h2>Options d'Hébergement</h2>
-            {% for hotel in hotels %}
-                <div class="hotel-card">
-                    <h3>{{ hotel.pnom }}</h3>
-                    {% if chambresEtTarifs[hotel.id] is defined %}
-                        {% for tarifInfo in chambresEtTarifs[hotel.id] %}
-                            <div class="categorie-chambre">
-                                <h4>{{ tarifInfo.libelleCategorie }}</h4>
-                                <p>Tarif: {{ tarifInfo.tarifNuite }} € par nuit</p>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>Aucune information sur les chambres et tarifs disponible pour cet hôtel.</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </section>
+            {% block hebergement %}
+                {% include('/home/hebergement.html.twig') %}
+            {%  endblock %}
 
-        <footer>
-            <p>Contactez-nous: contact@mdl.com</p>
-        </footer>
-    </body>
-</html>
+        </div>
+
+    </div>
+    <footer>
+        <p>Contactez-nous: contact@mdl.com</p>
+    </footer>
+
+
+{% endblock %}

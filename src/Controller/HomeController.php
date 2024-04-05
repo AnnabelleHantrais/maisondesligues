@@ -22,7 +22,7 @@ use DoctrineExtensions\Query\Mysql\Date;
 class HomeController extends AbstractController {
 
 
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(HotelRepository $hotelRepository, AtelierRepository $atelierRepository, VacationRepository $vacationRepository): Response {
         // Récupérer tous les hôtels
         $hotels = $hotelRepository->findAll();
@@ -37,7 +37,7 @@ class HomeController extends AbstractController {
         }
         $vacations = $vacationRepository->findDistinctDateheureDebutAndFin();
         $datesvacations = $vacationRepository->findDistinctDates();
-        dump($datesvacations);
+//        dump($datesvacations);
 //        dump($vacations);
 //        dump($hotels);
 

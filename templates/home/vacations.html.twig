@@ -1,0 +1,31 @@
+{# table de correspondances pour afficher les jours en français #}
+{% set trans_day_hash = { 
+        "Monday": "Lundi", 
+        "Tuesday": "Mardi", 
+        "Wednesday": "Mercredi", 
+        "Thursday": "Jeudi", 
+        "Friday": "Vendredi", 
+        "Saturday": "Samedi", 
+        "Sunday": "Dimanche" 
+    } 
+%}
+
+{% block vacations %}
+    <section id="vacations">
+        <h3>Vacations</h3>
+        <div class='container'>
+            <div class='row'>
+                {% for datevacation in datesvacations %}
+                    <div class='col'>
+                    <h5>{{ trans_day_hash[datevacation[1]|date('l')] }}</h5>
+                    {% for vacation in vacations %} 
+                        {%  if  datevacation[1]|date('Y-m-d') == vacation.dateheureDebut|date('Y-m-d') %}
+                            <div> {{ vacation.dateheureDebut|date('H:i')}} à {{ vacation.dateheureFin|date('H:i')}}</div>
+                        {%  endif %}
+                    {% endfor %}
+                    </div>
+                {%  endfor %}
+            </div>
+        </div>
+    </section>
+{%  endblock %}
