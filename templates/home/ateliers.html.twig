@@ -4,20 +4,22 @@
 {#
 {% block body %}
     <h1>Ateliers</h1>
-    
-    {% for atelier in ateliers %}
-        
-        <div>
-            <h3>{{atelier.id}} {{ atelier.libelle }}</h3>
-            {% for theme in atelier.themes%}
-            <div>
-                {{ theme.libelle }}
-            </div>
-            {%  endfor %}
+    <div class="container">
+        <div class='row align-items-start'>
 
+            {% for atelier in ateliers %}
+
+                <div class='col-6'>
+                    <h3>{{atelier.id}} {{ atelier.libelle }}</h3>
+                    {% for theme in atelier.themes%}
+                    <div>
+                        {{ theme.libelle }}
+                    </div>
+                    {%  endfor %}
+                </div>
+           {% endfor %}
         </div>
-        
-    {% endfor %}
+    </div>
 {% endblock %}
 
 #}
