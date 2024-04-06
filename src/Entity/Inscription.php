@@ -25,7 +25,7 @@ class Inscription
     #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'inscriptions')]
     private Collection $ateliers;
 
-    #[ORM\OneToOne(mappedBy: 'inscription', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'inscription', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
     public function __construct()

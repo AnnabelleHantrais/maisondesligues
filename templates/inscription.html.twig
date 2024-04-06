@@ -1,0 +1,20 @@
+{%  extends "base.html.twig" %}
+
+{% block body %}
+    {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class='col col-sm-6'>
+
+                <section id="inscription" >
+                    <h3>Inscription</h3>
+                    {{ form(form) }}
+                </section>
+            </div>
+        </div>
+    </div>
+
+    {% % endblock %}

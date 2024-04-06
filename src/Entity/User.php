@@ -3,81 +3,127 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['numlicence'], message: 'Il existe déjà un compte ayant ce numéro de licence.')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numlicencie = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $mdp = null;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $numlicence = null;
 
     #[ORM\Column]
-    private ?bool $isverified = null;
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
-    private Collection $roles;
+    #[ORM\Column(nullable: true)]
+    private ?bool $isVerified = null;
 
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(targetEntity: Inscription::class, cascade: ['persist', 'remove'], inversedBy: "user")]
     private ?Inscription $inscription = null;
-
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNumlicencie(): ?string
+    public function getNumlicence(): ?string
     {
-        return $this->numlicencie;
+        return $this->numlicence;
     }
 
-    public function setNumlicencie(string $numlicencie): static
+    public function setNumlicence(string $numlicence): static
     {
-        $this->numlicencie = $numlicencie;
+        $this->numlicence = $numlicence;
 
         return $this;
     }
 
-    public function getMdp(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->mdp;
+        return (string) $this->numlicence;
     }
 
-    public function setMdp(string $mdp): static
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        $this->mdp = $mdp;
+        return (string) $this->numlicence;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_INSCRIT';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function isIsverified(): ?bool
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->isverified;
+        return $this->password;
     }
 
-    public function setIsverified(bool $isverified): static
+    public function setPassword(string $password): static
     {
-        $this->isverified = $isverified;
+        $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): ?string
@@ -92,26 +138,14 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection<int, Role>
-     */
-    public function getRoles(): Collection
+    public function isIsVerified(): ?bool
     {
-        return $this->roles;
+        return $this->isVerified;
     }
 
-    public function addRole(Role $role): static
+    public function setIsVerified(?bool $isVerified): static
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
-        }
-
-        return $this;
-    }
-
-    public function removeRole(Role $role): static
-    {
-        $this->roles->removeElement($role);
+        $this->isVerified = $isVerified;
 
         return $this;
     }
@@ -121,7 +155,7 @@ class User
         return $this->inscription;
     }
 
-    public function setInscription(Inscription $inscription): static
+    public function setInscription(?Inscription $inscription): static
     {
         $this->inscription = $inscription;
 

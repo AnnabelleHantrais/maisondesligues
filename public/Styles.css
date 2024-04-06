@@ -141,3 +141,39 @@ footer p {
     color: #D9D59A;
     margin:3%
 }
+
+#inscription{
+    width:40vw;
+}
+
+.container{
+    width:100%;
+}
+
+.form-control{
+    border:1px solid lightgray !important;
+    box-shadow:5px 5px 5px lightgray;
+}
+
+button{
+    border-radius:5px !important;
+    padding: 0.3rem;
+    border: 0px solid #005792 !important;
+    background-color: #005792;
+    color:white;
+    width:min-content !important;
+    box-shadow:5px 5px 5px lightgray;
+}
+button:hover{
+    background-color: #80ABC9;
+    color:#005792;
+    box-shadow:0px 0px 0px lightgray;
+}
+
+
+.formulaire{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    justify-content:center;
+}
