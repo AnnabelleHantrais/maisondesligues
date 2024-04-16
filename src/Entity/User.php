@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['numlicence'], message: 'Il existe déjà un compte ayant ce numéro de licence.')]
-#[UniqueEntity(fields: ['numlicence'], message: 'There is already an account with this numlicence')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $numlicence = null;
+    private ?int $numlicence = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -44,12 +44,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getNumlicence(): ?string
+    public function getNumlicence(): ?int
     {
         return $this->numlicence;
     }
 
-    public function setNumlicence(string $numlicence): static
+    public function setNumlicence(int $numlicence): static
     {
         $this->numlicence = $numlicence;
 
@@ -61,17 +61,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getUserIdentifier(): string
+    public function getUserIdentifier(): int
     {
-        return (string) $this->numlicence;
+        return (int) $this->numlicence;
     }
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
-    public function getUsername(): string
+    public function getUsername(): int
     {
-        return (string) $this->numlicence;
+        return (int) $this->numlicence;
     }
 
     /**

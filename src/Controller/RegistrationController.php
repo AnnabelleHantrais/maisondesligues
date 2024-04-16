@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
         ////        $numLicence = $form['numlicence']->getData();
 //        dump($form['numlicence']);
         $licencie = $des->getLicencieByNumLicence($numLicence);
-      
+      dump($licencie);exit;
         //vérifier que le numéro de licence existe :
         
         if($licencie){

@@ -57,12 +57,12 @@ class Licencie
         return $this->id;
     }
 
-    public function getNumlicence(): ?string
+    public function getNumlicence(): ?int
     {
         return $this->numlicence;
     }
 
-    public function setNumlicence(string $numlicence): static
+    public function setNumlicence(int $numlicence): static
     {
         $this->numlicence = $numlicence;
 

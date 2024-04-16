@@ -37,10 +37,12 @@ class Deserialize
         //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$numLicence); //url test
 //        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/licencieByNum/'.$numLicence); //url test
        
-        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'. strval($numLicence) ); 
-        //dump($json->getContent());
+        //$json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'. strval($numLicence) ); 
+        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'. $numLicence ); 
+//        dump($json->getContent());exit;
         $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
-
+//        var_dump($licencie->getNumlicence());exit;
+        
         return $licencie;
     }
     
