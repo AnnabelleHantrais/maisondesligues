@@ -1,6 +1,9 @@
-{%  extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
+
     {% block header %}
         {% include('header.html.twig') %}
     {%  endblock %}
@@ -8,13 +11,51 @@
     <div class='container'>
         <div class='row justify-content-md-center'>
             <div class='col col-sm-6'>
+                <section id="login" >
+                    <h3>Connexion </h3>
+                    <form action="{{ path('app_login') }}" method="post" >
+                        <div class="container formulaire">
+                            <input type="hidden" name="_csrf_token" value="{{  csrf_token('authenticate') }}">
+                            <div class="row ">
+                                <div class="col col-sm-4">
+                                    <label for="username"  class="form-label">Numéro de licence:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}">
+                                </div>
+                            </div>
+                            <div class="row ">
 
-                <section id="inscription" >
-                    <h3>Inscription</h3>
-                    {{ form(form) }}
+                                <div class="col col-sm-4">
+                                    <label for="password"  class="form-label">Mot de passe:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="password" id="password" class="form-control" name="_password">
+                                </div>
+                            </div>
+                                <div class="row ">
+
+                                <div class="col col-sm-4">
+                                    <label for="password"  class="form-label">Confirmation mot de passe:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="password" id="password" class="form-control" name="_password">
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <button type="submit">Inscription</button>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
                 </section>
             </div>
         </div>
     </div>
 
-    {% % endblock %}
+
+
+{% endblock %}

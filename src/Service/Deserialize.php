@@ -20,8 +20,24 @@ class Deserialize
          
     public function getLicencie($id):Licencie
     {
-        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$id); //url test
-        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'.$id); 
+        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$id); //url test
+        dump($json->getContent());
+//        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'.$id); 
+        $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
+
+        return $licencie;
+    }
+    /**
+     * Fonction qui retourne un Licencie si le numero de licence passé en paramètre existe dans la base oracle et false sinon.
+     * @param type $numLicence
+     * @return Licencie|boolean
+     */
+     public function getLicencieByNumLicence($numLicence):Licencie|boolean
+    {
+        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$numLicence); //url test
+        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/licencie/'.$numLicence); //url test
+        dump($json->getContent());
+//        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'.$id); 
         $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
 
         return $licencie;

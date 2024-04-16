@@ -26,18 +26,18 @@ class InscriptionController extends AbstractController {
 
     #[Route('/inscription', name: 'app_inscription')]
     public function formInscription(): Response {
-        $user = new \App\Entity\User();
-        $form = $this->createFormBuilder($user)
-                ->add('numlicencie', TextType::class)
-                ->add('mdp', PasswordType::class)
-                ->add('mdp', PasswordType::class)
+//        $user = new \App\Entity\User();
+//        $form = $this->createFormBuilder($user)
+//                ->add('numlicencie', TextType::class)
+//                ->add('mdp', PasswordType::class)
+//                ->add('mdp', PasswordType::class)
 //                ->add('dueDate', DateType::class)
 //                ->add('save', SubmitType::class, ['label' => 'Create Task'])
-                ->getForm();
+//                ->getForm();
 
         return $this->render('inscription.html.twig', [
                     'controller_name' => 'InscriptionController',
-                    'form' => $form->createView(),
+//                    'form' => $form->createView(),
         ]);
     }
 
