@@ -32,8 +32,11 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        $numLicence = $form["numlicence"]->getData();
-        $licencie=$des->getLicencieByNumLicence($numLicence);
+        $numLicence = 16360514319;
+        ////        $numLicence = $form['numlicence']->getData();
+//        dump($form['numlicence']);
+        $licencie = $des->getLicencieByNumLicence($numLicence);
+      
         //vérifier que le numéro de licence existe :
         
         if($licencie){
@@ -42,7 +45,7 @@ class RegistrationController extends AbstractController
                    
         //récupérer l'email du licencié
             
-                   if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

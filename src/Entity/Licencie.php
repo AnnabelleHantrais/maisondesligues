@@ -15,7 +15,7 @@ class Licencie
     private ?int $id = null;
 
     #[ORM\Column(type: Types::BIGINT)]
-    private ?string $numlicence = null;
+    private ?int $numlicence = null;
 
     #[ORM\Column(length: 70)]
     private ?string $nom = null;
