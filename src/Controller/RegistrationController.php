@@ -34,18 +34,18 @@ class RegistrationController extends AbstractController {
             $numLicence = $form['numlicence']->getData();
             $licencie = $des->getLicencieByNumLicence($numLicence);
             //vérifier que le numéro de licence existe et si oui envoyer un email :
+            //vérifier que ce numero de licence ne correspond pas déjà à un utilisateur, sinon redirect login:
             if ($licencie) {
                 $email = $licencie->getMail();
                 $user->setEmail($email);
                 $this->setUserPassword($userPasswordHasher, $entityManager, $user, $form);
                 $this->handleEmail($user);
+            }else{
+                $this->addFlash('success', "Vous n'avez pas de licence.");
+
+                return $this->redirectToRoute('app_home');
             }
         }
-
-
-
-
-
 
         return $this->render('registration/register.html.twig', [
                     'registrationForm' => $form->createView(),
@@ -69,8 +69,8 @@ class RegistrationController extends AbstractController {
         $this->getUser()->setIsVerified(true);
         $entityManager->persist($this->getUser());
         $entityManager->flush();
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        
+        $this->addFlash('success', ' Votre email a bien été vérifié.');
 
         return $this->redirectToRoute('app_login');
     }
@@ -96,8 +96,8 @@ class RegistrationController extends AbstractController {
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                         ->from(new Address('annabelle.hantrais@gmail.com', 'contact address'))
-                        //->to($user->getEmail()) //à décommenter
-                        ->to('annabelle.hantrais@gmail.com') //pour tester
+                        ->to($user->getEmail()) 
+                        //->to('annabelle.hantrais@gmail.com') //pour tester
                         ->subject('Please Confirm your Email')
                         ->htmlTemplate('registration/confirmation_email.html.twig')
         );
