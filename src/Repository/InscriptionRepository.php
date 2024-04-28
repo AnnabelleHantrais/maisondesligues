@@ -27,7 +27,8 @@ class InscriptionRepository extends ServiceEntityRepository
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
+//                ->select('')
+//            ->andWhere('i.inscriptionId = :val')
 //            ->setParameter('val', $value)
 //            ->orderBy('i.id', 'ASC')
 //            ->setMaxResults(10)

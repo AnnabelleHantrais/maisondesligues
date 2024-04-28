@@ -47,15 +47,15 @@ class VacationRepository extends ServiceEntityRepository {
     // Dans votre repository VacationRepository.php
 
     public function findDistinctDateheureDebutAndFin() {
-        return $this->createQueryBuilder('v') // 'v' est un alias pour votre entité Vacation
-                        ->select('DISTINCT v.dateheureDebut, v.dateheureFin') // Assurez-vous que les noms des propriétés correspondent à ceux de votre entité
+        return $this->createQueryBuilder('v') 
+                        ->select('DISTINCT v.dateheureDebut, v.dateheureFin') 
                         ->getQuery()
                         ->getResult();
     }
     
     public function findDistinctDates() {
-        return $this->createQueryBuilder('v') // 'v' est un alias pour votre entité Vacation
-                        ->select("DISTINCT DATE(v.dateheureDebut)") // Assurez-vous que les noms des propriétés correspondent à ceux de votre entité
+        return $this->createQueryBuilder('v') 
+                        ->select("DISTINCT DATE(v.dateheureDebut)") 
                         ->getQuery()
                         ->getResult();
     }

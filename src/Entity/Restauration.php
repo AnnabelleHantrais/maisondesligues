@@ -7,8 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RestaurationRepository::class)]
-class Restauration
-{
+class Restauration {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,44 +23,38 @@ class Restauration
     #[ORM\ManyToOne(inversedBy: 'restaurations')]
     private ?Inscription $inscription = null;
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getDateRestauration(): ?\DateTimeInterface
-    {
+    public function getDateRestauration(): ?\DateTimeInterface {
         return $this->dateRestauration;
     }
 
-    public function setDateRestauration(\DateTimeInterface $dateRestauration): static
-    {
+    public function setDateRestauration(\DateTimeInterface $dateRestauration): static {
         $this->dateRestauration = $dateRestauration;
 
         return $this;
     }
 
-    public function getTypeRepas(): ?string
-    {
+    public function getTypeRepas(): ?string {
         return $this->typeRepas;
     }
 
-    public function setTypeRepas(string $typeRepas): static
-    {
+    public function setTypeRepas(string $typeRepas): static {
         $this->typeRepas = $typeRepas;
 
         return $this;
     }
 
-    public function getInscription(): ?Inscription
-    {
+    public function getInscription(): ?Inscription {
         return $this->inscription;
     }
 
-    public function setInscription(?Inscription $inscription): static
-    {
+    public function setInscription(?Inscription $inscription): static {
         $this->inscription = $inscription;
 
         return $this;
     }
+
 }

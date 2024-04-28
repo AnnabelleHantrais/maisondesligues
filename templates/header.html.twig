@@ -1,13 +1,15 @@
 {%  block header %} 
 <header>
-            <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl" href="{{ path('app_home') }}">
+    <a href="{{ path('app_home') }}"> <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl"></a>
             <nav>
                 <ul>
                     {#<li><a href="#congres">Le Congrès</a></li>
                     <li><a href="#ateliers">Ateliers</a></li>
                     <li><a href="#hebergement">Hébergement</a></li>
                     <li><a href="#contact">Contact</a></li>#}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
+                    {% endif %}
                     <li><a href="{{ path('app_register') }}">Créer mon compte</a></li>
                     <li><a href="{{ path('app_login') }}">Connexion</a></li>
 

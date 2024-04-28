@@ -6,10 +6,11 @@ use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use \App\Entity\Club;
+use \App\Entity\Qualite;
 
 use Symfony\Component\Serializer\SerializerInterface;
 
-class Deserialize
+class ApiDeserialize
 {
     public function __construct(
         private HttpClientInterface $client,
@@ -36,23 +37,36 @@ class Deserialize
     {
         //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$numLicence); //url test
 //        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/licencieByNum/'.$numLicence); //url test
-       
         //$json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'. strval($numLicence) ); 
+         
         $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'. $numLicence ); 
-//        dump($json->getContent());exit;
-        $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
-//        var_dump($licencie->getNumlicence());exit;
+        $decoded = json_decode($json->getContent(), true);
+        $id= $decoded['id'];
+        $licencie = $json->getContent()!=null ? $this->serializer->deserialize($json->getContent(), Licencie::class, 'json') : false;
+        $licencie->setId($id);
         
         return $licencie;
     }
     
-     public function getClub($id ): Club
+     public function getClub($id): Club
     {
         //$json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/club/'.$id); //url test
          
-        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/club/'.$id);
-        $licencie = $this->serializer->deserialize($json->getContent(), Club::class, 'json');
+        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/club/'. $id ); 
+//        dump($json->getContent());exit;
+        
+        $club = $json->getContent()!=null ? $this->serializer->deserialize($json->getContent(), Club::class, 'json') : false;
 
-        return $licencie;
+        return $club;
+    }
+    
+    public function getQualite($id): \App\Entity\Qualite
+    {
+        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/qualite/'. $id ); 
+        //dump($json->getContent());exit;
+        
+        $qualite = $json->getContent()!=null ? $this->serializer->deserialize($json->getContent(), Qualite::class, 'json') : false;
+
+        return $qualite;
     }
 }

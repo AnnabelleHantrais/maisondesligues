@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Restauration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PDO;
+use Doctrine\ORM\EntityManager;
+
 
 /**
  * @extends ServiceEntityRepository<Restauration>
@@ -14,27 +17,39 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Restauration[]    findAll()
  * @method Restauration[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RestaurationRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class RestaurationRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Restauration::class);
+    }
+
+    public function findDistinctDateRestauration(): array {
+        return $this->createQueryBuilder('r')
+                        ->select('DISTINCT r.dateRestauration')
+                        ->getQuery()
+                        ->getSingleColumnResult()
+        ;
+    }
+
+    public function findDistinctTypeRepas(): array {
+        return $this->createQueryBuilder('r')
+                        ->select('DISTINCT r.typeRepas')
+                        ->getQuery()
+                        ->getSingleColumnResult()
+        ;
     }
 
 //    /**
 //     * @return Restauration[] Returns an array of Restauration objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByDateRestauration($value): array|bool {
+      return $this->createQueryBuilder('r')
+              ->andWhere('r.dateRestauration=:val')
+              ->setParameter('val', $value)
+                        ->getQuery()
+                        ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Restauration
 //    {

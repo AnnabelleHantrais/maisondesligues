@@ -25,13 +25,17 @@ class Inscription
     #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'inscriptions')]
     private Collection $ateliers;
 
-    #[ORM\OneToOne(inversedBy: 'inscription', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'inscription', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: Nuite::class, inversedBy: 'inscriptions')]
+    private Collection $nuites;
 
     public function __construct()
     {
         $this->restaurations = new ArrayCollection();
         $this->ateliers = new ArrayCollection();
+        $this->nuites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,6 +125,30 @@ class Inscription
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nuite>
+     */
+    public function getNuites(): Collection
+    {
+        return $this->nuites;
+    }
+
+    public function addNuite(Nuite $nuite): static
+    {
+        if (!$this->nuites->contains($nuite)) {
+            $this->nuites->add($nuite);
+        }
+
+        return $this;
+    }
+
+    public function removeNuite(Nuite $nuite): static
+    {
+        $this->nuites->removeElement($nuite);
 
         return $this;
     }

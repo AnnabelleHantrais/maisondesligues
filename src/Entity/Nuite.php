@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NuiteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,17 @@ class Nuite
 
     #[ORM\ManyToOne(inversedBy: 'nuites')]
     private ?Hotel $hotel = null;
+
+    #[ORM\ManyToMany(targetEntity: Inscription::class, mappedBy: 'nuites')]
+    private Collection $inscriptions;
+
+    #[ORM\ManyToOne(inversedBy: 'nuites')]
+    private ?CategorieChambre $categorie = null;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +58,45 @@ class Nuite
     public function setHotel(?Hotel $hotel): static
     {
         $this->hotel = $hotel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): static
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->addNuite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): static
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            $inscription->removeNuite($this);
+        }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?CategorieChambre
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?CategorieChambre $categorie): static
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

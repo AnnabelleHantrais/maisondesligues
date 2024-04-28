@@ -87,8 +87,46 @@ INSERT INTO atelier_theme (atelier_id, theme_id) VALUES (6, 28);
 INSERT INTO atelier_theme (atelier_id, theme_id) VALUES (6, 29);
 INSERT INTO atelier_theme (atelier_id, theme_id) VALUES (6, 30);
 
--- plages d'ateliers : samedi 08/09 11-12H30 14-1530 16-1730  dimanche09/09 9h-1030 11-13h30 
+-- plages d'ateliers : samedi 08/09 11-12H30 14-1530 16-1730  dimanche09/09 9h-1030 11-12h30 
 insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(1,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(1,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(1,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(1,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(1,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(2,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(2,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(2,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(2,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(2,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(3,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(3,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(3,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(3,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(3,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(4,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(4,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(4,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(4,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(4,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(5,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(5,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(5,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(5,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(5,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(6,'2024-09-08 11:00:00', '2024-09-08 12:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(6,'2024-09-08 14:00:00', '2024-09-08 15:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(6,'2024-09-08 16:00:00', '2024-09-08 17:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(6,'2024-09-09 09:00:00', '2024-09-09 10:30:00');
+insert into vacation (atelier_id,dateheure_debut, dateheure_fin) values(6,'2024-09-09 11:00:00', '2024-09-08 12:30:00');
+
+
+
+
 select * from vacation;
-ALTER TABLE vacation AUTO_INCREMENT = id;
+ALTER TABLE vacation AUTO_INCREMENT = 1;
 delete from vacation where id=1;

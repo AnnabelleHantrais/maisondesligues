@@ -64,34 +64,24 @@ class HotelRepository extends ServiceEntityRepository {
 
         return $qb->getQuery()->getResult();
     }
+
+
+    public function findChambresEtNuitesParHotel() {
+            $entityManager = $this->getEntityManager();
+            $qb = $entityManager->createQueryBuilder();
+
+            $qb->select('h.id, h.pnom, c.libelleCategorie, p.tarifNuite')
+                    ->from('App\Entity\Hotel', 'h')
+                    ->join('App\Entity\Proposer', 'p',Join::WITH, $qb->expr()->eq('p.hotel', ':hotelId') )
+                    ->join('App\Entity\CategorieChambre', 'c', Join::WITH, $qb->expr()->eq('p.categorie', 'c.id'))
+                    ->where('h.id = :hotelId')
+    //                ->groupBy('h.id, c.id')
+                    ->orderBy('h.pnom', 'ASC')
+                    ->addOrderBy('c.libelleCategorie', 'ASC')
+                    ->addGroupBy()
+                    ->setParameter('hotelId', $hotelId);
+
+            return $qb->getQuery()->getResult();
+        }
 }
-
-//->innerJoin('c.phones', 'p', Join::ON, $qb->expr()->andx(
-//                $qb->expr()->eq('p.customerId', 'c.id'),
-//                $qb->expr()->eq('p.phone', ':phone')
-//            ))
-
-//    /**
-//     * @return Hotel[] Returns an array of Hotel objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('h.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-//    public function findOneBySomeField($value): ?Hotel
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 

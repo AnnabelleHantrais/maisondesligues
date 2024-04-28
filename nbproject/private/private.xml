@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Entity/User.php</file>
             <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Controller/InscriptionController.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/templates/header.html.twig</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Entity/Licencie.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Controller/RegistrationController.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/.env</file>
+            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/public/index.php</file>
             <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/templates/inscription.html.twig</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Service/Deserialize.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/templates/base.html.twig</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/public/js/main.js</file>
+            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Repository/NuiteRepository.php</file>
+            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Repository/RestaurationRepository.php</file>
         </group>
     </open-files>
 </project-private>
