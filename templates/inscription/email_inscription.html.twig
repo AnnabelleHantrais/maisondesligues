@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{# table de correspondances pour afficher les jours en français #}
+{% set trans_day_hash = { 
+        "Monday": "Lundi", 
+        "Tuesday": "Mardi", 
+        "Wednesday": "Mercredi", 
+        "Thursday": "Jeudi", 
+        "Friday": "Vendredi", 
+        "Saturday": "Samedi", 
+        "Sunday": "Dimanche" 
+    } 
+%}
+
+{% block body %}
+    <h1>Bonjour, vous avez enregistrée une inscription aux assises nationales de l'escrime !</h1>
+
+    <p>
+        Récapitulatif de votre inscription : <br>
+        montant dû : {{ montantInscription }}€ <br>
+
+    </p>
+
+    {#<form action="{{ path('app_inscription') }}" method="post" id="form-inscription">#}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class='col col-sm-10'>
+                <section id="inscription" >
+                    <h3>Inscription </h3>
+
+                    <section id="infos-licencies">
+                        <div>{{  licencie.getNumlicence() }}</div>
+                        <div>{{ qualite.getLibellequalite() }}</div>
+                        <div>{{ licencie.getPrenom()}}  {{ licencie.getNom() }}</div>
+                        <div>{{ licencie.getAdresse1() }}</div>
+                        <div>{{ licencie.getAdresse2()  }}</div>
+                        <div>{{ licencie.getCp()  }}</div>
+                        <div>{{ licencie.getVille()  }}</div>
+                        <div>{{ licencie.getMail() }}</div>
+                        <div>{{ licencie.getTel() }}</div>
+
+                    </section>
+                    <section id="ateliers" >
+                        <h3>Ateliers</h3>
+                        <div class="container">
+                            <div class='col align-items-start gx-3'>
+                                {% for atelier in ateliersChoisis %}
+                                    <div>{{atelier.id}} - {{ atelier.libelle }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="hebergement">
+                        <h3>Hébergement</h3>
+                        <div class="container">
+                            <div class="col">
+                                {%  for nuite in nuitesChoisies %}
+                                    <div>{{ nuite.getDateNuite() }} : {{ nuite.getHotel().getPnom() }} , {{ nuite.getCategorieChambre().getLibelleCategorie() }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="Restauration">
+                        <h3>Restauration</h3>
+                        <div class="container">
+                            <div class="col">
+                                
+                                {% for restauration in restaurationsChoisies %}
+                                    <div >{{ restauration.getDateRestauration() }} : {{ restauration.getTypeRepas() }}</div>
+                                {%  endfor %}
+
+                            </div>
+                            
+                        </div>
+
+                    </section>
+
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{%  endblock %}

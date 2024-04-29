@@ -31,6 +31,9 @@ class Inscription
     #[ORM\ManyToMany(targetEntity: Nuite::class, inversedBy: 'inscriptions')]
     private Collection $nuites;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isValidated = null;
+
     public function __construct()
     {
         $this->restaurations = new ArrayCollection();
@@ -149,6 +152,18 @@ class Inscription
     public function removeNuite(Nuite $nuite): static
     {
         $this->nuites->removeElement($nuite);
+
+        return $this;
+    }
+
+    public function isIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(?bool $isValidated): static
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

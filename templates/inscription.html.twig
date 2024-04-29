@@ -13,7 +13,7 @@
     } 
 %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Inscription au congrès{% endblock %}
 
 {% block body %}
 
@@ -21,14 +21,14 @@
         {% include('header.html.twig') %}
     {%  endblock %}
     
-    <form action="{{ path('app_enregistrer_inscription') }}" method="post" id="form-inscription">
+    <form action="{{ path('app_inscription') }}" method="post" id="form-inscription">
         
         <div class='container'>
             <div class='row justify-content-md-center'>
                 <div class='col col-sm-10'>
                     <section id="inscription" >
                         <h3>Inscription </h3>
-                        {% if is_inscrit is defined %}Vous avez une inscription en court :{% endif %}
+                        {% if is_inscrit is defined and is_validated is defined and is_validated ==false%}Vous avez une inscription en attente:{% endif %}
 
                         <section id="infos-licencies">
                             <div>{{  licencie.getNumlicence() }}</div>
@@ -85,7 +85,7 @@
 
                                                         {% for nuite in nuites %}
                                                             {% if nuite.getHotel() == hotel and nuite.getCategorie()== proposer.getCategorie() %}
-                                                                <div class='col col-4'><input type="checkbox" name="hebergements[]" value="{{ nuite.getId() }}" {% if nuitesChoisies is defined  and nuite in nuitesChoisies %} checked {% endif %}/></div>
+                                                                <div class='col col-4'><input type="checkbox" name="hebergements[]" value="{{ nuite.getId() }}_{{ proposer.getTarifNuite() }}" {% if nuitesChoisies is defined  and nuite in nuitesChoisies %} checked {% endif %}/></div>
 
                                                             {% endif %}
 
@@ -127,9 +127,12 @@
                             </div>
 
                         </section>
-                             
-                        <input class="btn btn-success" type="submit" value="Enregistrer"/>
-
+                       {% if is_validated is not defined or is_validated==false %}
+                            <input class="btn btn-success" type="submit" name='submit' value="Enregistrer"/>
+                            {% if is_inscrit is defined %}
+                                <input class="btn btn-danger" name='submit' type="submit" value="Valider"/>
+                            {% endif %}
+                        {% endif %}
                     </section>
                 </div>
             </div>
