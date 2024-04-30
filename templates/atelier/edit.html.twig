@@ -1,0 +1,18 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Atelier{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+    <h1>Modifier Atelier</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">Sauvegarder</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_atelier') }}">Retour à la liste des ateliers</a>
+{% endblock %}

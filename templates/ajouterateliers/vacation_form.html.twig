@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un atelier{% endblock %}
+
+{% block body %}
+     {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+
+    <div class="container">
+        <h1>Ajouter un atelier</h1>
+
+        {{ form_start(form) }}
+
+        <div class="form-group">
+            {{ form_label(form.atelier) }}
+            {{ form_widget(form.atelier, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.atelier) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.dateheureDebut) }}
+            {{ form_widget(form.dateheureDebut, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateheureDebut) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.dateheureFin) }}
+            {{ form_widget(form.dateheureFin, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateheureFin) }}
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Valider" class="btn btn-primary">
+            <a href="{{ path('app_ajouterateliers') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+
+        {{ form_end(form) }}    </div>
+{% endblock %}

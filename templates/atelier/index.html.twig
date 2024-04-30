@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ateliers{% endblock %}
+
+
+
+{% block body %}
+    {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+    <div class="container my-5">
+        <h1 class="mb-4">Ateliers</h1>
+
+        <div class="row">
+            {% for atelier in ateliers %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ atelier.libelle }}</h5>
+                            <a href="{{ path('app_vacation', {'id': atelier.id}) }}" class="btn btn-primary">Valider</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

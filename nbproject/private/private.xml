@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Controller/LoginController.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/templates/login/login.html.twig</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Entity/User.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Entity/Inscription.php</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/config/packages/security.yaml</file>
-            <file>file:/C:/Users/anna0/Documents/GitHub/maisondesligues/src/Entity/Licencie.php</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/src/Form/ThemeType.php</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/atelier/recupvacation.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/home/index.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/ajouterateliers/vacation_form.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/home/vacations.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/src/Controller/HomeController.php</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/home/hebergement.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/templates/ajouterateliers/theme_form.html.twig</file>
+            <file>file:/C:/Users/zaoui/OneDrive/Documents/GitHub/maisondesligues/src/Controller/AjouterateliersController.php</file>
         </group>
     </open-files>
 </project-private>

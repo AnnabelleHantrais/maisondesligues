@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Atelier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+use App\Entity\Vacation;
 
 /**
  * @extends ServiceEntityRepository<Atelier>
@@ -14,10 +16,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Atelier[]    findAll()
  * @method Atelier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AtelierRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class AtelierRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Atelier::class);
     }
 
@@ -35,7 +36,6 @@ class AtelierRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Atelier
 //    {
 //        return $this->createQueryBuilder('a')
@@ -45,4 +45,14 @@ class AtelierRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function RecupListAtelier() {
+        
+        $querybuilder = $this->createQueryBuilder('a')
+                
+                ->join(Vacation::class, 'v', Join::WITH, 'a.id = v.atelier')
+                ->groupBy('a.id');
+                dump($querybuilder);
+
+        return $querybuilder->getQuery()->getResult();
+    }
 }

@@ -1,17 +1,22 @@
 {%  block header %} 
-<header>
-            <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl">
-            <nav>
-                <ul>
-                    {#<li><a href="#congres">Le Congrès</a></li>
-                    <li><a href="#ateliers">Ateliers</a></li>
-                    <li><a href="#hebergement">Hébergement</a></li>
-                    <li><a href="#contact">Contact</a></li>#}
-                    <li><a href="#inscription">Inscription</a></li>
-                    <li><a href="{{ path('app_login') }}">Connexion</a></li>
+    <header>
+        <img src="{{ asset('images/Mdl.png') }}" alt="Logo MDL" id="logo-mdl">
+        <nav>
+            <ul>
+                {#<li><a href="#congres">Le Congrès</a></li>
+                <li><a href="#ateliers">Ateliers</a></li>
+                <li><a href="#hebergement">Hébergement</a></li>
+                <li><a href="#contact">Contact</a></li>#}
+                <li><a href="#inscription">Inscription</a></li>
+                <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                <li><a href="{{ path('app_ajouterateliers') }}">Ajouter un Activitée</a></li>
+                <li><a href="{{ path('app_atelier') }}">Modifier un Vacation </a></li>
 
-                </ul>
-            </nav>
-        </header>
-            
+
+
+
+            </ul>
+        </nav>
+    </header>
+
 {%  endblock %}
