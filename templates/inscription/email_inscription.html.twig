@@ -37,7 +37,7 @@
                         <div>{{ licencie.getAdresse2()  }}</div>
                         <div>{{ licencie.getCp()  }}</div>
                         <div>{{ licencie.getVille()  }}</div>
-                        <div>{{ licencie.getMail() }}</div>
+                        <div>{{ user.getEmail() }}</div>
                         <div>{{ licencie.getTel() }}</div>
 
                     </section>
@@ -57,7 +57,7 @@
                         <div class="container">
                             <div class="col">
                                 {%  for nuite in nuitesChoisies %}
-                                    <div>{{ nuite.getDateNuite() }} : {{ nuite.getHotel().getPnom() }} , {{ nuite.getCategorieChambre().getLibelleCategorie() }}</div>
+                                    <div>{{ nuite.getDateNuite()|date('d/m') }} : {{ nuite.getHotel().getPnom() }} , {{ nuite.getCategorie().getLibelleCategorie() }}</div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="col">
                                 
                                 {% for restauration in restaurationsChoisies %}
-                                    <div >{{ restauration.getDateRestauration() }} : {{ restauration.getTypeRepas() }}</div>
+                                    <div >{{ restauration.getDateRestauration()|date('d/m') }} : {{ restauration.getTypeRepas() }}</div>
                                 {%  endfor %}
 
                             </div>

@@ -14,27 +14,27 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Proposer[]    findAll()
  * @method Proposer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProposerRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class ProposerRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Proposer::class);
     }
 
-//    /**
-//     * @return Proposer[] Returns an array of Proposer objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Proposer[] Returns an array of Proposer objects
+     */
+    public function findProposerByNuiteAndHotel($categorieId, $hotelId): Proposer {
+        return $this->createQueryBuilder('p')
+                        ->andWhere('p.hotel = :hotelId')
+                        ->andWhere('p.categorie = :categorieId')
+                        ->setParameter(':categorieId', $categorieId)
+                        ->setParameter(':hotelId', $hotelId)
+                        ->orderBy('p.id', 'ASC')
+                        ->setMaxResults(10)
+                        ->getQuery()
+                        ->getSingleResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Proposer
 //    {

@@ -12,22 +12,7 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    {#    <h1>Register</h1>#}
-
-    {#{{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.numlicence) }}
-        {{ form_row(registrationForm.password, {
-            label: 'Mot de passe'
-        }) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}#}
-
-
-
-
+ 
     <div class='container'>
         <div class='row justify-content-md-center'>
             <div class='col col-sm-6'>
@@ -41,46 +26,9 @@
             label: 'Mot de passe'
         }) }}
 
-                    <button type="submit" class="btn">Register</button>
+                    <button type="submit" class="btn">Créer mon compte</button>
                     {{ form_end(registrationForm) }}
-                    {#   <form action="{{ path('app_login') }}" method="post" >
-                           <div class="container formulaire">
-                               <input type="hidden" name="_csrf_token" value="{{  csrf_token('authenticate') }}">
-                               <div class="row ">
-                                   <div class="col col-sm-4">
-                                       <label for="username"  class="form-label">Numéro de licence:</label>
-                                   </div>
-                                   <div class="col">
-                                       <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}">
-                                   </div>
-                               </div>
-                               <div class="row ">
-   
-                                   <div class="col col-sm-4">
-                                       <label for="password"  class="form-label">Mot de passe:</label>
-                                   </div>
-                                   <div class="col">
-                                       <input type="password" id="password" class="form-control" name="_password">
-                                   </div>
-                               </div>
-                                   <div class="row ">
-   
-                                   <div class="col col-sm-4">
-                                       <label for="password"  class="form-label">Confirmation mot de passe:</label>
-                                   </div>
-                                   <div class="col">
-                                       <input type="password" id="password" class="form-control" name="_password">
-                                   </div>
-                               </div>
-                               <div class="row justify-content-md-center">
-                                   <button type="submit">Inscription</button>
-                               </div>
-   
-                           </div>
-   
-   
-   
-                       </form>#}
+                
                 </section>
             </div>
         </div>

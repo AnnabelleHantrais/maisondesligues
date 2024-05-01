@@ -28,7 +28,7 @@
                 <div class='col col-sm-10'>
                     <section id="inscription" >
                         <h3>Inscription </h3>
-                        {% if is_inscrit is defined and is_validated is defined and is_validated ==false%}Vous avez une inscription en attente:{% endif %}
+                        {% if is_inscrit is defined and is_validated is defined and is_validated ==false%}Vous avez une inscription en attente:{% elseif is_inscrit is defined and is_validated is defined and is_validated==true%} Votre inscription a bien été validée.  {% endif %}
 
                         <section id="infos-licencies">
                             <div>{{  licencie.getNumlicence() }}</div>
@@ -39,20 +39,21 @@
                             <div>{{ licencie.getAdresse2()  }}</div>
                             <div>{{ licencie.getCp()  }}</div>
                             <div>{{ licencie.getVille()  }}</div>
-                            <input type='email' value={{ licencie.getMail() }}></input>
+                            <input type='email' name='licencie-email' id='licencie-email' value={{ user.getEmail() }}></input>
                             <div>{{  licencie.getTel() }}</div>
 
                         </section>
                         <section id="ateliers" >
                             <h3>Ateliers</h3>
+                            <div id="max-ateliers" style="color:navy; font-style:italic;">Vous pouvez assister à 5 ateliers maximum et seuls les ateliers encore disponibles sont affichés.</div>
                             <div class="container">
                                 <div class='row align-items-start gx-3'>
                                     {% for atelier in ateliers %}
                                         <div class='col col-sm-4 gy-3'>
                                             <div class='row' id="choix-ateliers">
-                                                <div class='col col-sm-1'><input id ="checkbox-{{atelier.id}}" type="checkbox" name="ateliers[]" value="{{atelier.id}}" {% if ateliersChoisis is defined  and atelier in ateliersChoisis %} checked {% endif %}/> </div>
+                                                <div class='col col-sm-1'><input class="ateliers-ckc" id ="checkbox-{{atelier.id}}" type="checkbox" name="ateliers[]" value="{{atelier.id}}" {% if ateliersChoisis is defined  and atelier in ateliersChoisis %} checked {% endif %}/> </div>
 
-                                                <div class='col'>{{atelier.id}} {{ atelier.libelle }}</div>
+                                                <div id ="libelleAtelier-{{atelier.id}}" class='col'>{{atelier.id}} {{ atelier.libelle }}</div>
                                             </div>
 
                                         </div>
@@ -118,21 +119,26 @@
                                         <div class="col col col-4">
                                             {{ trans_day_hash[daterestauration|date('l')] }}
                                         </div>
-                                        {% for restauration in restaurations[daterestauration]  %}
-                                            {% set r=daterestauration~"_"~restauration %}
-                                            <div class='col col col-4'><input type="checkbox" name="restaurations[]" value='{{daterestauration}}_{{ restauration }}' {% if restaurationsChoisies is defined  and  r in restaurationsChoisies %}checked{% endif %}/></div>
+                                        {% for typeRepas in restaurations[daterestauration]  %}
+                                            {% set r=daterestauration~"_"~typeRepas %}
+                                            <div class='col col col-4'><input type="checkbox" name="restaurations[]" value='{{daterestauration}}_{{ typeRepas }}' {% if restaurationsChoisiesSTR is defined  and  r in restaurationsChoisiesSTR %}checked{% endif %}/></div>
                                             {% endfor %}
                                     </div>
                                 {% endfor %}
                             </div>
 
                         </section>
-                       {% if is_validated is not defined or is_validated==false %}
+                       {% if (is_validated is not defined or is_validated==false) and is_inscrit is defined %}
+                           <div>Montant dû : {{ montantInscription }}€ </div>
+                        {% endif %}
+                          {% if is_inscrit is not defined %}
                             <input class="btn btn-success" type="submit" name='submit' value="Enregistrer"/>
-                            {% if is_inscrit is defined %}
+                          {% endif %}   
+                            {% if is_inscrit is defined  and is_validated ==false %}
+                                <input class="btn btn-warning" type="submit" name='submit' value="Abandonner"/>
                                 <input class="btn btn-danger" name='submit' type="submit" value="Valider"/>
                             {% endif %}
-                        {% endif %}
+                       
                     </section>
                 </div>
             </div>

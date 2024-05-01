@@ -22,7 +22,6 @@ class ApiDeserialize
     public function getLicencie($id):Licencie
     {
         $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$id); //url test
-        dump($json->getContent());
 //        $json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'.$id); 
         $licencie = $this->serializer->deserialize($json->getContent(), Licencie::class, 'json');
 
@@ -35,13 +34,11 @@ class ApiDeserialize
      */
      public function getLicencieByNumLicence(int $numLicence):Licencie|bool
     {
-        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'.$numLicence); //url test
-//        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/licencieByNum/'.$numLicence); //url test
-        //$json = $this->client->request('GET', 'http://maisondesliguesapi.fr:8080/licencie/'. strval($numLicence) ); 
-         
         $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/'. $numLicence ); 
+        
         $decoded = json_decode($json->getContent(), true);
         $id= $decoded['id'];
+        
         $licencie = $json->getContent()!=null ? $this->serializer->deserialize($json->getContent(), Licencie::class, 'json') : false;
         $licencie->setId($id);
         

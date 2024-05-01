@@ -51,13 +51,5 @@ class RestaurationRepository extends ServiceEntityRepository {
         ;
     }
 
-//    public function findOneBySomeField($value): ?Restauration
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }

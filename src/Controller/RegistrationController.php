@@ -25,24 +25,23 @@ class RegistrationController extends AbstractController {
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,ApiDeserialize $des): Response {
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ApiDeserialize $des): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $numLicence = $form['numlicence']->getData();
             $licencie = $des->getLicencieByNumLicence($numLicence);
-            //vérifier que le numéro de licence existe et si oui envoyer un email :
-            //vérifier que ce numero de licence ne correspond pas déjà à un utilisateur, sinon redirect login:
+
             if ($licencie) {
                 $email = $licencie->getMail();
                 $user->setEmail($email);
                 $this->setUserPassword($userPasswordHasher, $entityManager, $user, $form);
                 $this->handleEmail($user);
             }else{
-                $this->addFlash('success', "Vous n'avez pas de licence.");
-
+                $this->addFlash('success', "Vous n'avez pas de licence, vous ne pouvez pas créer un compte.");
                 return $this->redirectToRoute('app_home');
             }
         }
@@ -95,13 +94,11 @@ class RegistrationController extends AbstractController {
         // generate a signed url and email it to the user
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                        ->from(new Address('annabelle.hantrais@gmail.com', 'contact address'))
+                        ->from(new Address('contact@mdl.com', 'contact address'))
                         ->to($user->getEmail()) 
-                        //->to('annabelle.hantrais@gmail.com') //pour tester
                         ->subject('Please Confirm your Email')
                         ->htmlTemplate('registration/confirmation_email.html.twig')
         );
-        // do anything else you need here, like send an email
 
         return $this->redirectToRoute('app_login');
     }

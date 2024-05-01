@@ -21,21 +21,18 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
-//    /**
-//     * @return Inscription[] Returns an array of Inscription objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//                ->select('')
-//            ->andWhere('i.inscriptionId = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Inscription[] Returns an array of Inscription objects
+     */
+    public function delete($id): int {
+        return $this->createQueryBuilder('i')
+                ->delete('')
+            ->andWhere('i.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Inscription
 //    {
