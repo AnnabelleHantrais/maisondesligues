@@ -51,7 +51,7 @@ class AtelierController extends AbstractController {
             $entityManager->flush(); // Sauvegarder les modifications dans la base de données
 
             $this->addFlash('success', 'L\'vacation a été mis à jour.');
-            return $this->redirectToRoute('edit_vacation', ['id' => $vacation->getId()]);
+            return $this->redirectToRoute('app_home', ['id' => $vacation->getId()]);
 
         }
         //il vviens affiche le parti visuale  de la page 

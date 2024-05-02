@@ -47,6 +47,9 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($theme); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
+            $this->addFlash('success', 'Votre demande est prise en compte');
+                    return $this->redirectToRoute('app_ajouterateliers');
+
         }
         return $this->renderForm('ajouterateliers/theme_form.html.twig', [
                     'form' => $form,
@@ -61,6 +64,8 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($vacation); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
+            $this->addFlash('success', 'Votre demande est prise en compte');
+                    return $this->redirectToRoute('app_ajouterateliers');
         }
         return $this->renderForm('ajouterateliers/vacation_form.html.twig', [
                     'form' => $form,
@@ -76,6 +81,8 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($atelier); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
+            $this->addFlash('success', 'Votre demande est prise en compte');
+                    return $this->redirectToRoute('app_ajouterateliers');
         }
         return $this->renderForm('ajouterateliers/atelier_form.html.twig', [
                     'form' => $form,

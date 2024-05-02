@@ -1,42 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {%  block body %}
-
-    {% block header %}
-        {% include('header.html.twig') %}
-    {%  endblock %}
-
-    <div class='container-img'>
-        <img id="banniere" class='cover align-items-start-' src=" {{ asset('images/fencing.jpg') }} " alt="Deux personnes pratiquant l'escrime.Photo de Eugene Lim sur Unsplash."/>   
-        <section id="congres" class="top-right" >
-            <h2>Assises nationales de l'Escrime</h2>
-            <p>Du 8 au 9 Septembre 2024</p>
-        </section>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
     </div>
+{% endfor %}
+        {% block header %}
+            {% include('header.html.twig') %}
+        {%  endblock %}
 
-    <div class='row gx-1'>
-        <div class='col col-lg-9 align-items-center'>
-            {% block ateliers %}
-                {% include('/home/ateliers.html.twig') %}
-            {%  endblock %}
-        </div>
-        <div class='col col-sm-3'>
-            {% block vacations %}
-                {% include('/home/vacations.html.twig') %}
-            {%  endblock %}
-
-            {% block hebergement %}
-                {% include('/home/hebergement.html.twig') %}
-            {%  endblock %}
-
-          
-
+        <div class='container-img'>
+            <img id="banniere" class='cover align-items-start-' src=" {{ asset('images/fencing.jpg') }} " alt="Deux personnes pratiquant l'escrime.Photo de Eugene Lim sur Unsplash."/>   
+            <section id="congres" class="top-right" >
+                <h2>Assises nationales de l'Escrime</h2>
+                <p>Du 8 au 9 Septembre 2024</p>
+            </section>
         </div>
 
-    </div>
-    <footer>
-        <p>Contactez-nous: contact@mdl.com</p>
-    </footer>
+        <div class='row gx-1'>
+            <div class='col col-lg-9 align-items-center'>
+                {% block ateliers %}
+                    {% include('/home/ateliers.html.twig') %}
+                {%  endblock %}
+            </div>
+            <div class='col col-sm-3'>
+                {% block vacations %}
+                    {% include('/home/vacations.html.twig') %}
+                {%  endblock %}
+
+                {% block hebergement %}
+                    {% include('/home/hebergement.html.twig') %}
+                {%  endblock %}
 
 
-{% endblock %}
+
+            </div>
+
+        </div>
+        <footer>
+            <p>Contactez-nous: contact@mdl.com</p>
+        </footer>
+
+
+        {% endblock %}
