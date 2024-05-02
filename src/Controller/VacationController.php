@@ -19,10 +19,10 @@ use Symfony\Component\Form\FormView;
 
 class VacationController extends AbstractController {
 
-    #[Route('/atelier', name: 'app_atelier')]
-    public function index(AtelierRepository $atelierRepository): Response {
+    #[Route('/selectAtelier', name: 'app_select_atelier')]
+    public function selectAtelier(AtelierRepository $atelierRepository): Response {
         $ateliers = $atelierRepository->findAll();
-        return $this->render('atelier/index.html.twig', [
+        return $this->render('vacation/index.html.twig', [
                     'ateliers' => $ateliers
         ]);
     }
@@ -35,14 +35,14 @@ class VacationController extends AbstractController {
         }
         $vacations = $vacationRepository->findBy(['atelier' => $atelier]);
 
-        return $this->render('atelier/recupvacation.html.twig', [
+        return $this->render('vacation/recupvacation.html.twig', [
                     'vacations' => $vacations,
                     'atelier' => $atelier
         ]);
     }
 
     #[Route('/vacation/{id}', name: 'edit_vacation')]
-    public function editVacation(VacationRepository $vacationRepository, Vacation $vacation, EntityManagerInterface $entityManager,Request $request ) {
+    public function editVacation(Vacation $vacation, EntityManagerInterface $entityManager,Request $request, $id ) {
 
         $builder = $this->createFormBuilder($vacation);
         $builder->add('dateheuredebut', DateTimeType::class, [
@@ -55,14 +55,16 @@ class VacationController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+             
             $entityManager->flush(); // Sauvegarder les modifications dans la base de données
-            $this->addFlash('success', 'La vacation a été mis à jour.');
+            $this->addFlash('success', 'La vacation a été mise à jour.');
             return $this->redirectToRoute('edit_vacation', ['id' => $vacation->getId()]);
         }
         //affichage de la vue 
-        return $this->render('home/formvacation.html.twig', [
+        return $this->render('vacation/edit-vacation.html.twig', [
                     'vacation' => $vacation,
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
+                    'id'=>$id
         ]);
     }
 

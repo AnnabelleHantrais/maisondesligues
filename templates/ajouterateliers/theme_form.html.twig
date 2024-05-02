@@ -1,28 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un atelier{% endblock %}
+{% block title %}Ajouter un theme{% endblock %}
 
 {% block body %}
     {% include 'header.html.twig' %}
 
-    {{ form_start(form, {'attr': {'class': 'my-form'}}) }}
-    <div class="form-errors my-custom-class-for-errors">
-        {{ form_errors(form) }}
-    </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            {{ form_row(form.libelle, {'attr': {'class': 'form-control'}}) }}
+    <div class='container'>
+
+        <h1>Ajouter un thème</h1>
+        {{ form_start(form, {'attr': {'class': 'my-form'}}) }}
+        <div class="form-errors my-custom-class-for-errors">
+            {{ form_errors(form) }}
         </div>
-        <div class="form-group col-md-6">
-            {{ form_row(form.ateliers, {'attr': {'class': 'form-control'}}) }}
+
+        <div id="form-theme" class="form-row col-md-5">
+            <div class="form-group row ">
+                {{ form_row(form.libelle, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group row">
+                {% for atelier in form.ateliers %}
+                    <div class="form-row"> {{ form_widget(atelier) }} {{ form_label(atelier) }} </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Valider</button>
+                <a href="{{ path('app_ajouterateliers') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+
+            {{ form_end(form) }}
+
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Valider</button>
-        <a href="{{ path('app_ajouterateliers') }}" class="btn btn-secondary">Annuler</a>
-    </div>
-
-    {{ form_end(form) }}
 {% endblock %}

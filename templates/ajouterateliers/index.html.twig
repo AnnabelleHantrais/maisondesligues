@@ -2,7 +2,7 @@
 
 
 {% block title %}
-    Hello AjouterateliersController!
+    Ajouter une activité
 {% endblock %}
 
  
@@ -11,7 +11,7 @@
         {% include('header.html.twig') %}
     {%  endblock %}
     <div class="container">
-        <h1 class="my-5">Ajouter un atelier</h1>
+        <h1 class="my-5">Ajouter une activité</h1>
 
         {{ form_start(form) }}
 
@@ -19,7 +19,7 @@
             {{ form_errors(form) }}
         </div>
 
-        <div class="row">
+        <div class="row ">
             <div class="col-md-6">
                 <div class="form-group">
                     {{ form_row(form.activity, {'attr': {'class': 'form-control'}}) }}

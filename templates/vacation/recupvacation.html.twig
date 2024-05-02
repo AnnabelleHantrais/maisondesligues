@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vacations{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+        {% include('header.html.twig') %}
+    {%  endblock %}
+    <div class="container">
+        
+        <div class="row align-items-center">
+            <div class="col-1 align-items-center"><a href="{{ path('app_select_atelier') }}"><i class="fa-solid fa-circle-arrow-left"></i></a></div>
+                <div class="col-11"><h1>Vacations</h1></div>
+        </div>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vacation in vacations %}
+                    <tr>
+                        <td>
+                            <input type="datetime-local" class="form-control" name="vacations[{{ vacation.id }}][dateDebut]" value="{{ vacation.dateheuredebut|date('Y-m-d H:i') }}">
+                        </td>
+                        <td>
+                            <input type="datetime-local" class="form-control" name="vacations[{{ vacation.id }}][dateFin]" value="{{ vacation.dateheurefin|date('Y-m-d H:i') }}">
+                        </td>
+                        <td>
+                            <a  id="btn-modif-vacation" href ="{{ path('edit_vacation', {'id': vacation.id}) }} " type="submit" class="btn btn-primary">Modifier</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock %}

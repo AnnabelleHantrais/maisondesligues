@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {# table de correspondances pour afficher les jours en français #}
 {% set trans_day_hash = { 
         "Monday": "Lundi", 
@@ -20,28 +19,55 @@
     {% block header %}
         {% include('header.html.twig') %}
     {%  endblock %}
-    
+
     <form action="{{ path('app_inscription') }}" method="post" id="form-inscription">
-        
+
         <div class='container'>
             <div class='row justify-content-md-center'>
                 <div class='col col-sm-10'>
                     <section id="inscription" >
                         <h3>Inscription </h3>
-                        {% if is_inscrit is defined and is_validated is defined and is_validated ==false%}Vous avez une inscription en attente:{% elseif is_inscrit is defined and is_validated is defined and is_validated==true%} Votre inscription a bien été validée.  {% endif %}
+                        {% if is_inscrit is defined and is_validated is defined and is_validated ==false%}Vous avez une inscription en attente:
+                        {% elseif is_inscrit is defined and is_validated is defined and is_validated==true%} Vous avez une inscription validée: 
+                        {% endif %}
 
                         <section id="infos-licencies">
-                            <div>{{  licencie.getNumlicence() }}</div>
-                            <div>{{ qualite.getLibellequalite() }}</div>
-
-                            <div>{{ licencie.getPrenom()}}  {{ licencie.getNom() }}</div>
-                            <div>{{ licencie.getAdresse1() }}</div>
-                            <div>{{ licencie.getAdresse2()  }}</div>
-                            <div>{{ licencie.getCp()  }}</div>
-                            <div>{{ licencie.getVille()  }}</div>
-                            <input type='email' name='licencie-email' id='licencie-email' value={{ user.getEmail() }}></input>
-                            <div>{{  licencie.getTel() }}</div>
-
+                            <div>
+                                <label for="numLicence">Numéro de licence:</label>
+                                {{ licencie.getNumlicence() }}
+                            </div>
+                            <div>
+                                <label for="qualite">Qualité:</label>
+                                {{ qualite.getLibellequalite() }}
+                            </div>
+                            <div>
+                                <label for="nomPrenom">Nom et prénom:</label>
+                                {{ licencie.getPrenom() }} {{ licencie.getNom() }}
+                            </div>
+                            <div>
+                                <label for="adresse1">Adresse:</label>
+                                {{ licencie.getAdresse1() }}
+                            </div>
+                            <div>
+                                <label for="adresse2">Adresse (suite):</label>
+                                {{ licencie.getAdresse2() }}
+                            </div>
+                            <div>
+                                <label for="cp">Code postal:</label>
+                                {{ licencie.getCp() }}
+                            </div>
+                            <div>
+                                <label for="ville">Ville:</label>
+                                {{ licencie.getVille() }}
+                            </div>
+                            <div>
+                                <label for="email">Adresse e-mail:</label>
+                                <input type='email' name='licencie-email' id='licencie-email' value={{ user.getEmail() }}>
+                            </div>
+                            <div>
+                                <label for="tel">Téléphone:</label>
+                                {{ licencie.getTel() }}
+                            </div>
                         </section>
                         <section id="ateliers" >
                             <h3>Ateliers</h3>
@@ -128,17 +154,17 @@
                             </div>
 
                         </section>
-                       {% if (is_validated is not defined or is_validated==false) and is_inscrit is defined %}
-                           <div>Montant dû : {{ montantInscription }}€ </div>
+                        {% if  is_inscrit is defined %}
+                            <div>Montant dû : {{ montantInscription }}€ </div>
                         {% endif %}
-                          {% if is_inscrit is not defined %}
+                        {% if is_inscrit is not defined %}
                             <input class="btn btn-success" type="submit" name='submit' value="Enregistrer"/>
-                          {% endif %}   
-                            {% if is_inscrit is defined  and is_validated ==false %}
-                                <input class="btn btn-warning" type="submit" name='submit' value="Abandonner"/>
-                                <input class="btn btn-danger" name='submit' type="submit" value="Valider"/>
-                            {% endif %}
-                       
+                        {% endif %}   
+                        {% if is_inscrit is defined  and is_validated ==false %}
+                            <input class="btn btn-warning" type="submit" name='submit' value="Abandonner"/>
+                            <input class="btn btn-danger" name='submit' type="submit" value="Valider"/>
+                        {% endif %}
+
                     </section>
                 </div>
             </div>

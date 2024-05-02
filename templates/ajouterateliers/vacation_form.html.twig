@@ -1,39 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un atelier{% endblock %}
+{% block title %}Ajouter une Vacation{% endblock %}
 
 {% block body %}
-     {% block header %}
+    {% block header %}
         {% include('header.html.twig') %}
     {%  endblock %}
 
     <div class="container">
-        <h1>Ajouter un atelier</h1>
+        <h1>Ajouter une vacation</h1>
 
         {{ form_start(form) }}
+        <div class="col col-6">
+            <div class="form-group row">
+                {{ form_label(form.atelier) }}
+                {{ form_widget(form.atelier, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.atelier) }}
+            </div>
 
-        <div class="form-group">
-            {{ form_label(form.atelier) }}
-            {{ form_widget(form.atelier, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.atelier) }}
+            <div class="form-group row">
+                <div>Date et heure de début</div>
+                {{ form_widget(form.dateheureDebut, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheureDebut) }}
+            </div>
+
+            <div class="form-group row">
+                <div>Date et heure de fin</div>
+                {{ form_widget(form.dateheureFin, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheureFin) }}
+            </div>
+
+            <div class="form-group ">
+                <input type="submit" value="Valider" class="btn btn-primary">
+                <a href="{{ path('app_ajouterateliers') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+
+            {{ form_end(form) }}    
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.dateheureDebut) }}
-            {{ form_widget(form.dateheureDebut, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.dateheureDebut) }}
-        </div>
 
-        <div class="form-group">
-            {{ form_label(form.dateheureFin) }}
-            {{ form_widget(form.dateheureFin, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.dateheureFin) }}
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="Valider" class="btn btn-primary">
-            <a href="{{ path('app_ajouterateliers') }}" class="btn btn-secondary">Annuler</a>
-        </div>
-
-        {{ form_end(form) }}    </div>
-{% endblock %}
+    {% endblock %}
