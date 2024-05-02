@@ -14,7 +14,7 @@ body {
     color: #333;
     /*width:100vw;*/
     font-size:0.8em !important;
-    
+
 }
 
 h3{
@@ -119,23 +119,23 @@ footer p {
     filter:contrast(70%);
 }
 .cover {
-  object-fit: cover;
-  width: 100vw;
-  height: 45em;
+    object-fit: cover;
+    width: 100vw;
+    height: 45em;
 }
 
 /* Container holding the image and the text */
 .container-img {
-  position: relative;
-  text-align: center;
-  background-color:transparent;
+    position: relative;
+    text-align: center;
+    background-color:transparent;
 }
 
 /* Top right text */
 .top-right {
-  position: absolute;
-  top: 8px;
-  right: 16px;
+    position: absolute;
+    top: 8px;
+    right: 16px;
     background-color:transparent;
     /*color:#B4C5E4;*/
     color: #D9D59A;
@@ -176,4 +176,32 @@ button:hover{
     flex-direction:column;
     gap:1rem;
     justify-content:center;
+}
+
+
+#activity_activity{
+    display:flex !important;
+    flex-direction:row !important;
+    gap:1rem !important;
+    justify-content:start !important;
+}
+
+.activity-card{
+    display:flex !important;
+    flex-direction:column !important;
+    row-gap:3rem !important;
+    justify-content:start !important;
+}
+
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+#infos-licencies>div>label{
+    font-weight:bold;
+}
+
+i{
+    font-size:1.2rem;
 }
