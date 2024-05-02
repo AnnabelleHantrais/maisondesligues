@@ -16,7 +16,7 @@ use App\Form\VacationType;
 use Symfony\Component\Form\FormView;
 
 
-class AtelierController extends AbstractController {
+class VacationController extends AbstractController {
 
     #[Route('/atelier', name: 'app_atelier')]
     public function index(AtelierRepository $atelierRepository): Response {
@@ -54,7 +54,7 @@ class AtelierController extends AbstractController {
             return $this->redirectToRoute('edit_vacation', ['id' => $vacation->getId()]);
 
         }
-        //il vviens affiche le parti visuale  de la page 
+        //affichage de la vue 
         return $this->renderform('home/formvacation.html.twig', [
                     'vacation' => $vacation,
                      'form'=>$form

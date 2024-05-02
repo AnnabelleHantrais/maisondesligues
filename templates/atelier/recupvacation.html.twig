@@ -21,10 +21,10 @@
                     {% for vacation in vacations %}
                     <tr>
                         <td>
-                            <input type="date" class="form-control" name="vacations[{{ vacation.id }}][dateDebut]" value="{{ vacation.dateheuredebut|date('Y-m-d') }}">
+                            <input type="datetime-local" class="form-control" name="vacations[{{ vacation.id }}][dateDebut]" value="{{ vacation.dateheuredebut|date('Y-m-d H:i') }}">
                         </td>
                         <td>
-                            <input type="date" class="form-control" name="vacations[{{ vacation.id }}][dateFin]" value="{{ vacation.dateheurefin|date('Y-m-d') }}">
+                            <input type="datetime-local" class="form-control" name="vacations[{{ vacation.id }}][dateFin]" value="{{ vacation.dateheurefin|date('Y-m-d H:i') }}">
                         </td>
                         <td>
                             <a href ="{{ path('edit_vacation', {'id': vacation.id}) }} " type="submit" class="btn btn-primary">Modifier</a>

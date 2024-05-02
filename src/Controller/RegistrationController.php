@@ -40,9 +40,11 @@ class RegistrationController extends AbstractController {
                 $user->setEmail($email);
                 $this->setUserPassword($userPasswordHasher, $entityManager, $user, $form);
                 $this->handleEmail($user);
-            }else{
-                $this->addFlash('success', "Vous n'avez pas de licence, vous ne pouvez pas créer un compte.");
+                $this->addFlash('success', "Votre compte a bien été créé, vous allez recevoir un email de vérification.");
                 return $this->redirectToRoute('app_home');
+            }else{
+                $this->addFlash('danger', "Le numéro de licence saisi ne correspond à aucune licence enregistrée.");
+//                return $this->redirectToRoute('app_register');
             }
         }
 
