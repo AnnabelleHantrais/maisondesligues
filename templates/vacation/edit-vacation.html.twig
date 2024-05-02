@@ -75,26 +75,30 @@
 
 
     <div class="container">
+        <div class="col-md-5">
 
-        <div class="row align-items-center">
-            <div class="col-1 align-items-center"><a href="{{ path('app_vacation', {'id': id }) }}"><i class="fa-solid fa-circle-arrow-left"></i></a></div>
+            <div class="row align-items-center">
+                <div class="col-1 align-items-center"><a href="{{ path('app_vacation', {'id': id }) }}"><i class="fa-solid fa-circle-arrow-left"></i></a></div>
                 <div class="col-11"><h1>Modifier Vacation</h1></div>
-        </div>
-        {{ form_start(form, {'attr': {'class': 'form-horizontal', 'id':'form-creation-vacation'}}) }}
+            </div>
+            {{ form_start(form, {'attr': {'class': 'form-horizontal', 'id':'form-creation-vacation'}}) }}
 
-        <div class="form-group row">
-            <div>Date et heure de début</div>
-            {{ form_widget(form.dateheuredebut, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.dateheuredebut) }}
+            <div class="form-group row">
+                <div>Date et heure de début</div>
+                {{ form_widget(form.dateheuredebut, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheuredebut) }}
+            </div>
+
+            <div class="form-group row">
+                <div>Date et heure de fin</div>
+                {{ form_widget(form.dateheurefin, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheurefin) }}
+            </div>
+            <button id="sauvegarder_vacation" class="btn btn-success">Sauvegarder</button>
+            {{ form_end(form) }}
+
         </div>
 
-        <div class="form-group row">
-            <div>Date et heure de fin</div>
-            {{ form_widget(form.dateheurefin, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.dateheurefin) }}
-        </div>
-        <button id="sauvegarder_vacation" class="btn btn-success">Sauvegarder</button>
-        {{ form_end(form) }}
     </div>
 
 {% endblock %}
