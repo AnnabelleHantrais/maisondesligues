@@ -33,39 +33,32 @@ class ApiDeserialize {
      * @return Licencie|boolean
      */
     public function getLicencieByNumLicence(int $numLicence): Licencie|bool {
-        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/' . $numLicence);
+        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/licencie/' . $numLicence); //url remote 
+        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/licencie/' . $numLicence); //url epreuve
         $decoded = json_decode($json->getContent(), true);
-        
+
         if (!empty($decoded)) {
             $id = $decoded['id'];
             $licencie = $json->getContent() != null ? $this->serializer->deserialize($json->getContent(), Licencie::class, 'json') : false;
             $licencie->setId($id);
-        }else{
-            $licencie=false;
+        } else {
+            $licencie = false;
         }
-
-
-
-
 
         return $licencie;
     }
 
     public function getClub($id): Club {
-        //$json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/club/'.$id); //url test
-
-        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/club/' . $id);
-//        dump($json->getContent());exit;
-
+        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/club/' . $id); //url epreuve
+        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/club/' . $id); //url remote
         $club = $json->getContent() != null ? $this->serializer->deserialize($json->getContent(), Club::class, 'json') : false;
 
         return $club;
     }
 
     public function getQualite($id): \App\Entity\Qualite {
-        $json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/qualite/' . $id);
-        //dump($json->getContent());exit;
-
+        $json = $this->client->request('GET', 'http://10.10.2.148/maisondesliguesAPI/public/index.php/qualite/' . $id); //url epreuve
+        //$json = $this->client->request('GET', 'http://localhost:2280/maisondesliguesAPI/public/index.php/qualite/' . $id); //remote
         $qualite = $json->getContent() != null ? $this->serializer->deserialize($json->getContent(), Qualite::class, 'json') : false;
 
         return $qualite;
