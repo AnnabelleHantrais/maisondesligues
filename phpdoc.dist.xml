@@ -15,9 +15,7 @@
             <source dsn=".">
                 <path>src</path>
             </source>
-            <ignore hidden="true" >
-              
-            </ignore>
+          
         </api>
     </version>
 
