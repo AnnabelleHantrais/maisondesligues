@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Ajouter une vacation</h1>
 
-        {{ form_start(form) }}
+        {{ form_start(form ,{'attr': {'id': 'form-creation-vacation'}}) }}
         <div class="col col-6">
             <div class="form-group row">
                 {{ form_label(form.atelier) }}
@@ -20,14 +20,14 @@
 
             <div class="form-group row">
                 <div>Date et heure de début</div>
-                {{ form_widget(form.dateheureDebut, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.dateheureDebut) }}
+                {{ form_widget(form.dateheuredebut, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheuredebut) }}
             </div>
 
             <div class="form-group row">
                 <div>Date et heure de fin</div>
-                {{ form_widget(form.dateheureFin, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.dateheureFin) }}
+                {{ form_widget(form.dateheurefin, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateheurefin) }}
             </div>
 
             <div class="form-group ">

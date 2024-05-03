@@ -21,7 +21,6 @@ $(document).ready(function () {
         $(".ateliers-ckc:checked").each(function () {
             nbAteliers += 1;
         });
-        console.log(nbAteliers);
         if (nbAteliers > 5) {
             $(".ateliers-ckc").each(function () {
                 $(this).removeAttr('checked');
@@ -52,6 +51,12 @@ $(document).ready(function () {
             event.preventDefault();
             $("#erreur-date").remove();
             $("#form").append(`<div id="erreur-date" style="color:red;">La date de début doit être antérieure à la date de fin.</div>`);
+        }
+        else if (dateFin === dateDebut){
+            event.preventDefault();
+            $("#erreur-date").remove();
+            $("#form").append(`<div id="erreur-date" style="color:red;">La vacation ne peut pas avoir une durée nulle.</div>`);
+            
         }
 
     });

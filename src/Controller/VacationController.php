@@ -16,7 +16,6 @@ use App\Entity\Vacation;
 use App\Form\VacationType;
 use Symfony\Component\Form\FormView;
 
-
 class VacationController extends AbstractController {
 
     #[Route('/selectAtelier', name: 'app_select_atelier')]
@@ -42,20 +41,20 @@ class VacationController extends AbstractController {
     }
 
     #[Route('/vacation/{id}', name: 'edit_vacation')]
-    public function editVacation(Vacation $vacation, EntityManagerInterface $entityManager,Request $request, $id ) {
+    public function editVacation(Vacation $vacation, EntityManagerInterface $entityManager, Request $request, $id) {
 
         $builder = $this->createFormBuilder($vacation);
         $builder->add('dateheuredebut', DateTimeType::class, [
-                'widget' => 'single_text'
-            ])
+                    'widget' => 'single_text'
+                ])
                 ->add('dateheurefin', DateTimeType::class, [
-                'widget' => 'single_text'
-            ]);
+                    'widget' => 'single_text'
+        ]);
         $form = $builder->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-             
+
             $entityManager->flush(); // Sauvegarder les modifications dans la base de données
             $this->addFlash('success', 'La vacation a été mise à jour.');
             return $this->redirectToRoute('edit_vacation', ['id' => $vacation->getId()]);
@@ -64,7 +63,7 @@ class VacationController extends AbstractController {
         return $this->render('vacation/edit-vacation.html.twig', [
                     'vacation' => $vacation,
                     'form' => $form->createView(),
-                    'id'=>$id
+                    'idAtelier' => $vacation->getAtelier()->getId()
         ]);
     }
 

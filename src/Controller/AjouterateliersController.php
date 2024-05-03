@@ -49,10 +49,10 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($theme); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
-            
+
             $this->addFlash('success', 'Le thème a bien été créé.');
         }
-        
+
         return $this->renderForm('ajouterateliers/theme_form.html.twig', [
                     'form' => $form,
         ]);
@@ -62,8 +62,8 @@ class AjouterateliersController extends AbstractController {
     public function formVacation(Request $request, EntityManagerInterface $entityManager): Response {
         $vacation = new Vacation();
         $builder = $this->createFormBuilder($vacation);
-        $builder->add('dateheureDebut', DateTimeType::class, ['widget' => 'single_text'])
-                ->add('dateheureFin', DateTimeType::class, ['widget' => 'single_text']);
+        $builder->add('dateheuredebut', DateTimeType::class, ['widget' => 'single_text'])
+                ->add('dateheurefin', DateTimeType::class, ['widget' => 'single_text']);
         $builder->add('atelier', EntityType::class, [
             'class' => Atelier::class,
             'choice_label' => 'libelle',
@@ -74,11 +74,11 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($vacation); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
-            
+
             $this->addFlash('success', 'La vacation a bien été créée.');
         }
 
-        
+
         return $this->render('ajouterateliers/vacation_form.html.twig', [
                     'form' => $form->createView(),
         ]);
@@ -93,11 +93,11 @@ class AjouterateliersController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($atelier); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
-            
+
             $this->addFlash('success', "L'atelier a bien été créé.");
         }
 
-        
+
         return $this->renderForm('ajouterateliers/atelier_form.html.twig', [
                     'form' => $form,
         ]);

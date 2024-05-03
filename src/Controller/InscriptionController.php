@@ -408,7 +408,7 @@ class InscriptionController extends AbstractController {
         return $ateliersDispo;
     }
 
- 
+    
     
     
     
