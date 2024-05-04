@@ -51,6 +51,7 @@ class AjouterateliersController extends AbstractController {
             $entityManager->flush();
 
             $this->addFlash('success', 'Le thème a bien été créé.');
+            return $this->redirectToRoute('app_ajouterateliers');
         }
 
         return $this->renderForm('ajouterateliers/theme_form.html.twig', [
@@ -76,6 +77,8 @@ class AjouterateliersController extends AbstractController {
             $entityManager->flush();
 
             $this->addFlash('success', 'La vacation a bien été créée.');
+            return $this->redirectToRoute('app_ajouterateliers');
+        
         }
 
 
@@ -95,6 +98,8 @@ class AjouterateliersController extends AbstractController {
             $entityManager->flush();
 
             $this->addFlash('success', "L'atelier a bien été créé.");
+                        return $this->redirectToRoute('app_ajouterateliers');
+
         }
 
 
@@ -102,5 +107,4 @@ class AjouterateliersController extends AbstractController {
                     'form' => $form,
         ]);
     }
-
 }
