@@ -43,26 +43,19 @@ class VacationController extends AbstractController {
     #[Route('/vacation/{id}', name: 'edit_vacation')]
     public function editVacation(Vacation $vacation, EntityManagerInterface $entityManager, Request $request, $id) {
 
-        $builder = $this->createFormBuilder($vacation);
-        $builder->add('dateheuredebut', DateTimeType::class, [
-                    'widget' => 'single_text'
-                ])
-                ->add('dateheurefin', DateTimeType::class, [
-                    'widget' => 'single_text'
-        ]);
-        $form = $builder->getForm();
+        $form = $this->createForm(VacationType::class, $vacation);
+        $form->remove('atelier');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->flush(); // Sauvegarder les modifications dans la base de données
             $this->addFlash('success', 'La vacation a été mise à jour.');
             return $this->redirectToRoute('edit_vacation', ['id' => $vacation->getId()]);
         }
         //affichage de la vue 
-        return $this->render('vacation/edit-vacation.html.twig', [
+        return $this->renderForm('vacation/edit-vacation.html.twig', [
                     'vacation' => $vacation,
-                    'form' => $form->createView(),
+                    'form' => $form,
                     'idAtelier' => $vacation->getAtelier()->getId()
         ]);
     }

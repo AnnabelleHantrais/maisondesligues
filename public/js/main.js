@@ -32,35 +32,36 @@ $(document).ready(function () {
     });
 
 
-    $("#form-creation-vacation").submit(function (event) {
-
-        $("#erreur-date").remove();
-
-        let dateDebut = new Date($("#form_dateheuredebut").val());
-        let dateFin = new Date($("#form_dateheurefin").val());
-
-        let jourDebut = dateDebut.toISOString().slice(0, 10);
-        let jourFin = dateFin.toISOString().slice(0, 10);
-
-        if (jourDebut !== jourFin) {
-            event.preventDefault();
-            $("#erreur-date").remove();
-            $("#form").append(`<div id="erreur-date" style="color:red;">Le jour de début doit être égal au jour de fin.</div>`);
-        }
-        if (dateFin < dateDebut) {
-            event.preventDefault();
-            $("#erreur-date").remove();
-            $("#form").append(`<div id="erreur-date" style="color:red;">La date de début doit être antérieure à la date de fin.</div>`);
-        }
-        else if (dateFin === dateDebut){
-            event.preventDefault();
-            $("#erreur-date").remove();
-            $("#form").append(`<div id="erreur-date" style="color:red;">La vacation ne peut pas avoir une durée nulle.</div>`);
-            
-        }
-
-    });
-
+//    $("#form-creation-vacation").submit(function (event) {
+//
+//        $("#erreur-date").remove();
+//
+//        let dateDebut = new Date($("#form_dateheuredebut").val());
+//        let dateFin = new Date($("#form_dateheurefin").val());
+//
+//        let jourDebut = dateDebut.toISOString().slice(0, 10);
+//        let jourFin = dateFin.toISOString().slice(0, 10);
+//
+//        console.log(jourDebut + "   " + jourFin );
+//        
+//        if (jourDebut !== jourFin) {
+//            event.preventDefault();
+//            $("#erreur-date").remove();
+//            $("#form").append(`<div id="erreur-date" style="color:red;">Le jour de début doit être égal au jour de fin.</div>`);
+//        }
+//        if (dateFin < dateDebut) {
+//            event.preventDefault();
+//            $("#erreur-date").remove();
+//            $("#form").append(`<div id="erreur-date" style="color:red;">La date de début doit être antérieure à la date de fin.</div>`);
+//        }
+//        else if (dateFin === dateDebut){
+//            event.preventDefault();
+//            $("#erreur-date").remove();
+//            $("#form").append(`<div id="erreur-date" style="color:red;">La vacation ne peut pas avoir une durée nulle.</div>`);
+//            
+//        }
+//
+//    });
 
 });
 

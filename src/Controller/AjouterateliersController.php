@@ -13,6 +13,7 @@ use App\Entity\Vacation;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Atelier;
 use App\Entity\Theme;
+use App\Form\VacationType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -61,24 +62,13 @@ class AjouterateliersController extends AbstractController {
     #[Route('/creationvacation', name: 'app_creationvacation')]
     public function formVacation(Request $request, EntityManagerInterface $entityManager): Response {
         $vacation = new Vacation();
-        $builder = $this->createFormBuilder($vacation);
-        $builder->add('dateheuredebut', DateTimeType::class, ['widget' => 'single_text'])
-                ->add('dateheurefin', DateTimeType::class, ['widget' => 'single_text']);
-        $builder->add('atelier', EntityType::class, [
-            'class' => Atelier::class,
-            'choice_label' => 'libelle',
-        ]);
-
-        $form = $builder->getForm();
+        $form = $this->createForm(VacationType::class, $vacation);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {//si les info sont validé ben tu va me faire tel truc 
             $entityManager->persist($vacation); //c'est un turc qui permt de dire doctrien prendre en compte cet objet si ileest nouveau il va le cree siono il va le mettre à jour 
             $entityManager->flush();
-
             $this->addFlash('success', 'La vacation a bien été créée.');
         }
-
-
         return $this->render('ajouterateliers/vacation_form.html.twig', [
                     'form' => $form->createView(),
         ]);
@@ -96,8 +86,7 @@ class AjouterateliersController extends AbstractController {
 
             $this->addFlash('success', "L'atelier a bien été créé.");
         }
-
-
+        
         return $this->renderForm('ajouterateliers/atelier_form.html.twig', [
                     'form' => $form,
         ]);

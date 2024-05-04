@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormError;
+
 class VacationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options): void {
@@ -22,9 +23,12 @@ class VacationType extends AbstractType {
                     'expanded' => true, //il premtr de dire c'est si en mode bouton ou en mode selsect si true un bouton a cohcé si fauc un menu deroalnte 
                     'choice_label' => 'libelle',
                 ])
-                ->add('dateheureDebut', DateTimeType::class)
-                   
-                ->add('dateheureFin', DateTimeType::class)
+                ->add('dateheureDebut', DateTimeType::class, [
+                    'widget' => 'single_text'
+                ])
+                ->add('dateheureFin', DateTimeType::class, [
+                    'widget' => 'single_text'
+        ]);
         ;
         
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
