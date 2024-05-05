@@ -75,13 +75,14 @@
                         </section>
                         <section id="ateliers" >
                             <h3>Ateliers</h3>
-                            <div id="max-ateliers" style="color:navy; font-style:italic;">Vous pouvez assister à 5 ateliers maximum et seuls les ateliers encore disponibles sont affichés.</div>
+                            <input id="nbDistinctVacations" hidden type="text" value="{{ nbVacations }}"/>
+                            <div id="max-ateliers" style="color:navy; font-style:italic;">Vous pouvez assister à {{ nbVacations}} ateliers maximum et seuls les ateliers encore disponibles sont affichés.</div>
                             <div class="container">
                                 <div class='row align-items-start gx-3'>
                                     {% for atelier in ateliers %}
                                         <div class='col col-sm-4 gy-3'>
                                             <div class='row' id="choix-ateliers">
-                                                <div class='col col-sm-1'><input class="ateliers-ckc" id ="checkbox-{{atelier.id}}" type="checkbox" name="ateliers[]" value="{{atelier.id}}" {% if ateliersChoisis is defined  and atelier in ateliersChoisis %} checked {% endif %}/> </div>
+                                                <div class='col col-sm-1'><input class="ateliers-ckc" id ="checkbox-{{atelier.id}}" type="checkbox" name="ateliers[]" value="{{atelier.id}}" {% if ateliersChoisis is defined  and atelier in ateliersChoisis %} checked {% endif %}{% if is_validated is defined and is_validated %}disabled{% endif %}/> </div>
 
                                                 <div id ="libelleAtelier-{{atelier.id}}" class='col'>{{atelier.id}} {{ atelier.libelle }}</div>
                                             </div>
@@ -116,7 +117,7 @@
 
                                                         {% for nuite in nuites %}
                                                             {% if nuite.getHotel() == hotel and nuite.getCategorie()== proposer.getCategorie() %}
-                                                                <div class='col col-4'><input type="checkbox" name="hebergements[]" value="{{ nuite.getId() }}_{{ proposer.getTarifNuite() }}" {% if nuitesChoisies is defined  and nuite in nuitesChoisies %} checked {% endif %}/></div>
+                                                                <div class='col col-4'><input type="checkbox" name="hebergements[]" value="{{ nuite.getId() }}_{{ proposer.getTarifNuite() }}" {% if nuitesChoisies is defined  and nuite in nuitesChoisies %} checked {% endif %}{% if is_validated is defined and is_validated %}disabled{% endif %}/></div>
 
                                                             {% endif %}
 
@@ -151,7 +152,7 @@
                                         </div>
                                         {% for typeRepas in restaurations[daterestauration]  %}
                                             {% set r=daterestauration~"_"~typeRepas %}
-                                            <div class='col col col-4'><input type="checkbox" name="restaurations[]" value='{{daterestauration}}_{{ typeRepas }}' {% if restaurationsChoisiesSTR is defined  and  r in restaurationsChoisiesSTR %}checked{% endif %}/></div>
+                                            <div class='col col col-4'><input type="checkbox" name="restaurations[]" value='{{daterestauration}}_{{ typeRepas }}' {% if restaurationsChoisiesSTR is defined  and  r in restaurationsChoisiesSTR %}checked{% endif %}{% if is_validated is defined and is_validated %}disabled{% endif %}/></div>
                                             {% endfor %}
                                     </div>
                                 {% endfor %}

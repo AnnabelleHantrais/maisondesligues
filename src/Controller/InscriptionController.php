@@ -10,8 +10,7 @@ use App\Repository\AtelierRepository;
 use App\Repository\HotelRepository;
 use App\Repository\CategorieChambreRepository;
 use App\Repository\NuiteRepository;
-use App\Repository\RestaurationRepository;
-use App\Controller\LoginController;
+use App\Repository\VacationRepository;
 use App\Entity\Inscription;
 use Doctrine\ORM\EntityManagerInterface;
 use \App\Repository\ProposerRepository;
@@ -20,24 +19,30 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Entity\User;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\Atelier;
 use \App\Repository\InscriptionRepository;
 
 class InscriptionController extends AbstractController {
 
     #[Route('/inscription', name: 'app_inscription')]
     #[Security("is_granted('ROLE_INSCRIT')")]
-    public function formInscription(AtelierRepository $atelierRepository, ProposerRepository $proposerR, ApiDeserialize $des, MailerInterface $mailer, NuiteRepository $nuiteR, HotelRepository $hotelR, CategorieChambreRepository $catR, EntityManagerInterface $em, InscriptionRepository $iR): Response {
+    public function formInscription(VacationRepository $vacationR, AtelierRepository $atelierRepository, ProposerRepository $proposerR, ApiDeserialize $des, MailerInterface $mailer, NuiteRepository $nuiteR, HotelRepository $hotelR, CategorieChambreRepository $catR, EntityManagerInterface $em, InscriptionRepository $iR): Response {
 
-        $variablesEnvoyees = $this->variablesFormulaireDeCreation($atelierRepository, $proposerR, $des, $mailer, $nuiteR, $hotelR, $catR, $em);
+        $variablesEnvoyees = $this->variablesFormulaireDeCreation($vacationR, $atelierRepository, $proposerR, $des, $mailer, $nuiteR, $hotelR, $catR, $em);
         $montantInscription = 0;
 
         if ($this->getUser()->getInscription() == null) {
             $isPremierEnregistrement = (isset($_POST) && !empty($_POST) && $_POST['submit'] == 'Enregistrer');
 
             if ($isPremierEnregistrement) {
+
+                if (empty($this->getFormValues()['ateliers'])) {
+                    $this->addFlash('danger', "Vous devez vous inscrire à au moins un atelier");
+                    return $this->redirectToRoute('app_inscription');
+                } else if (sizeof($this->getFormValues()['ateliers']) > $variablesEnvoyees['nbVacations']) {
+                    $this->addFlash('danger', "Vous ne pouvez vous inscrire qu'à " . $variablesEnvoyees['nbVacations'] . ' ateliers maximum. ');
+                    return $this->redirectToRoute('app_inscription');
+                }
+
                 $montantInscription = $this->enregistrerInscription($atelierRepository, $nuiteR, $em);
                 $variablesEnvoyees = $this->variablesAddChoixInscription($variablesEnvoyees);
                 $variablesEnvoyees += ['montantInscription' => $montantInscription];
@@ -52,7 +57,14 @@ class InscriptionController extends AbstractController {
             $isAbandon = (isset($_POST) && !empty($_POST) && $_POST['submit'] == 'Abandonner');
 
             if ($isValidation) {
-                $montantInscription = $this->validerInscription($atelierRepository, $nuiteR, $em);
+                if (empty($this->getFormValues()['ateliers'])) {
+                    $this->addFlash('danger', "Vous devez vous inscrire à au moins un atelier");
+                    return $this->redirectToRoute('app_inscription');
+                } else if (sizeof($this->getFormValues()['ateliers']) > $variablesEnvoyees['nbVacations']) {
+                    $this->addFlash('danger', "Vous ne pouvez vous inscrire qu'à " . $variablesEnvoyees['nbVacations'] . ' ateliers maximum. ');
+                    return $this->redirectToRoute('app_inscription');
+                }
+                $montantInscription = $this->enregistrerInscription($atelierRepository, $nuiteR, $em, $isValidation);
                 $variablesEnvoyees = $this->variablesAddChoixInscription($variablesEnvoyees);
                 $variablesEnvoyees += ['montantInscription' => $montantInscription];
                 $this->sendInscriptionEmail($this->getUser(), $mailer, $variablesEnvoyees);
@@ -60,7 +72,7 @@ class InscriptionController extends AbstractController {
             } else if ($isAbandon) {
                 $this->abandonnerInscription($em, $iR);
             } else {
-                //inscription déjà validée et on revient dessus
+                //inscription déjà validée ou enregistrée et on revient dessus
                 $inscription = $this->getUser()->getInscription();
                 $variablesEnvoyees = $this->variablesAddChoixInscription($variablesEnvoyees);
                 $montantInscription = $this->calculeMontantInscription($inscription->getNuites(), $inscription->getRestaurations(), $_ENV['typesRepas'], $proposerR);
@@ -83,7 +95,7 @@ class InscriptionController extends AbstractController {
      * @param EntityManagerInterface $em
      * @return type
      */
-    private function variablesFormulaireDeCreation(AtelierRepository $atelierRepository, ProposerRepository $proposerR, ApiDeserialize $des, MailerInterface $mailer, NuiteRepository $nuiteR, HotelRepository $hotelR, CategorieChambreRepository $catR, EntityManagerInterface $em) {
+    private function variablesFormulaireDeCreation(VacationRepository $vacationR, AtelierRepository $atelierRepository, ProposerRepository $proposerR, ApiDeserialize $des, MailerInterface $mailer, NuiteRepository $nuiteR, HotelRepository $hotelR, CategorieChambreRepository $catR, EntityManagerInterface $em) {
         $user = $this->getUser();
         $numLicence = $user->getNumlicence();
         $licencie = $des->getLicencieByNumLicence($numLicence);
@@ -94,6 +106,7 @@ class InscriptionController extends AbstractController {
         $hotels = $hotelR->findAll();
         $categories = $catR->findAll();
         $distinctNuites = $nuiteR->findDistinctDateNuite();
+        $nbVacations = sizeof($vacationR->findDistinctDateheureDebutAndFin());
 
         $proposers = $proposerR->findAll();
         $nuites = $nuiteR->findAll();
@@ -117,7 +130,8 @@ class InscriptionController extends AbstractController {
             'nuites' => $nuites,
             'proposers' => $proposers,
             'typesRepas' => $typesRepas,
-            'tarifParRepas' => $tarifParRepas
+            'tarifParRepas' => $tarifParRepas,
+            'nbVacations' => $nbVacations
         ];
 
         return $variablesEnvoyees;
@@ -156,45 +170,6 @@ class InscriptionController extends AbstractController {
     }
 
     /**
-     * Fonction qui enregistre les éventuelles modificaations apportées à l'inscription et qui passe l'inscription à 'validée'.
-     * @param AtelierRepository $atelierR
-     * @param MailerInterface $mailer
-     * @param NuiteRepository $nuiteR
-     * @param EntityManagerInterface $em
-     * @param type $variablesTwig
-     * @param InscriptionRepository $iR
-     * @return type
-     */
-    private function validerInscription(AtelierRepository $atelierR, NuiteRepository $nuiteR, EntityManagerInterface $em) {
-        $prixInscription = '%env(TARIF_INSCRIPTION)%';
-        $tarifParRepas = '%env(TARIF_RESTAURATION)%';
-        $montantInscription = floatval($prixInscription);
-
-        //récupère les données du formulaire en POST
-        $ateliers = filter_input(INPUT_POST, 'ateliers', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $hebergements = filter_input(INPUT_POST, 'hebergements', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $restaurations = filter_input(INPUT_POST, 'restaurations', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $email = filter_input(INPUT_POST, 'licencie-email', FILTER_SANITIZE_STRING);
-
-        //modifie l'email de l'utilisateur
-        $this->getUser()->setEmail($email);
-        $em->persist($this->getUser());
-
-        //récupère l'inscription de l'utilisateur
-        $inscription = $this->getUser()->getInscription();
-        //modifie l'inscription au cas où des modifications ont été apportées et retourne le montant final de l'inscription
-        $montantInscription = $this->modifierInscription($atelierR, $nuiteR, $em, $ateliers, $hebergements, $restaurations, $inscription, $tarifParRepas, $montantInscription);
-
-        //passe l'inscription à 'validée'
-        $inscription->setIsValidated(true);
-
-        $em->persist($inscription);
-        $em->flush();
-
-        return $montantInscription;
-    }
-
-    /**
      * Fonction qui récupère les données du formulaire d'inscription (en POST) et qui selon le cas  crée, modifie ou valide une inscription.
      * @param AtelierRepository $atelierR
      * @param MailerInterface $mailer
@@ -203,22 +178,36 @@ class InscriptionController extends AbstractController {
      * @param array $variablesTwig
      * @return float
      */
-    private function enregistrerInscription(AtelierRepository $atelierR, NuiteRepository $nuiteR, EntityManagerInterface $em): float {
+    private function enregistrerInscription(AtelierRepository $atelierR, NuiteRepository $nuiteR, EntityManagerInterface $em, $isValidation = false): float {
 
-        $prixInscription = '%env(TARIF_INSCRIPTION)%';
-        $tarifParRepas = '%env(TARIF_RESTAURATION)%';
-        $montantInscription = floatval($prixInscription);
+        $tarifParRepas = $this->getParameter('tarifRestauration');
+        $montantInscription = floatval($this->getParameter('tarifInscription'));
 
-        $ateliers = filter_input(INPUT_POST, 'ateliers', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $hebergements = filter_input(INPUT_POST, 'hebergements', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $restaurations = filter_input(INPUT_POST, 'restaurations', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
-        $email = filter_input(INPUT_POST, 'licencie-email', FILTER_SANITIZE_STRING);
+        $formValues = $this->getFormValues();
+        $ateliers = $formValues['ateliers'];
+
+        $hebergements = $formValues['hebergements'];
+        $restaurations = $formValues['restaurations'];
+        $email = $formValues['email'];
 
         $this->getUser()->setEmail($email);
         $em->persist($this->getUser());
 
-        $inscription = new Inscription();
-        $montantInscription = $this->fillInscription($atelierR, $nuiteR, $em, $ateliers, $hebergements, $restaurations, $inscription, $tarifParRepas, $montantInscription);
+        if ($isValidation) {
+            //récupère l'inscription de l'utilisateur
+            $inscription = $this->getUser()->getInscription();
+            //modifie l'inscription au cas où des modifications ont été apportées et retourne le montant final de l'inscription
+            $montantInscription = $this->modifierInscription($atelierR, $nuiteR, $em, $ateliers, $hebergements, $restaurations, $inscription, $tarifParRepas, $montantInscription);
+
+            //passe l'inscription à 'validée'
+            $inscription->setIsValidated(true);
+
+            $em->persist($inscription);
+            $em->flush();
+        } else {
+            $inscription = new Inscription();
+            $montantInscription = $this->fillInscription($atelierR, $nuiteR, $em, $ateliers, $hebergements, $restaurations, $inscription, $tarifParRepas, $montantInscription);
+        }
 
         return $montantInscription;
     }
@@ -305,25 +294,32 @@ class InscriptionController extends AbstractController {
      */
     private function fillInscription(AtelierRepository $atelierR, NuiteRepository $nuiteR, EntityManagerInterface $em, $ateliers, $hebergements, $restaurations, $inscription, $tarifParRepas, float $montantInscription): float {
 
+
         foreach ($ateliers as $idAtelier) {
             $inscription->addAtelier($atelierR->find($idAtelier));
         }
-        foreach ($restaurations as $restau) {
-            $restau = explode('_', $restau);
-            $restauration = new Restauration();
-            $restauration->setDateRestauration(new \DateTime($restau[0]));
-            $restauration->setTypeRepas($restau[1]);
-            $em->persist($restauration);
-            $inscription->addRestauration($restauration);
-            $montantInscription += floatval($tarifParRepas);
+        if (!empty($restaurations)) {
+            foreach ($restaurations as $restau) {
+                $restau = explode('_', $restau);
+                $restauration = new Restauration();
+                $restauration->setDateRestauration(new \DateTime($restau[0]));
+                $restauration->setTypeRepas($restau[1]);
+                $em->persist($restauration);
+                $inscription->addRestauration($restauration);
+                $montantInscription += floatval($tarifParRepas);
+            }
         }
-        foreach ($hebergements as $nuite) {
-            $nuite = explode('_', $nuite);
-            $idNuite = $nuite[0];
-            $tarifNuite = floatval($nuite[1]);
-            $montantInscription += floatval($tarifNuite);
-            $inscription->addNuite($nuiteR->find($idNuite));
+
+        if (!empty($hebergements)) {
+            foreach ($hebergements as $nuite) {
+                $nuite = explode('_', $nuite);
+                $idNuite = $nuite[0];
+                $tarifNuite = floatval($nuite[1]);
+                $montantInscription += floatval($tarifNuite);
+                $inscription->addNuite($nuiteR->find($idNuite));
+            }
         }
+
 
         $inscription->setDateinscription(new \DateTime('now'));
         $inscription->setUser($this->getUser());
@@ -343,7 +339,7 @@ class InscriptionController extends AbstractController {
      */
     private function calculeMontantInscription($nuites, $restaurations, $tarifParRepas, ProposerRepository $proposerR): float {
 
-        $montantInscription = 0;
+        $montantInscription = $this->getParameter('tarifInscription');
 
         foreach ($restaurations as $restauration) {
             $montantInscription += floatval($tarifParRepas);
@@ -408,8 +404,23 @@ class InscriptionController extends AbstractController {
         return $ateliersDispo;
     }
 
-    
-    
-    
-    
+    /**
+     * Fonction qui récupère l'email du licencie, les ateliers, les restaurations et les nuites saisies dans le formulaire en POST.
+     * @return array
+     */
+    private function getFormValues(): array {
+
+        $ateliers = filter_input(INPUT_POST, 'ateliers', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        $hebergements = filter_input(INPUT_POST, 'hebergements', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        $restaurations = filter_input(INPUT_POST, 'restaurations', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+        $email = filter_input(INPUT_POST, 'licencie-email', FILTER_SANITIZE_STRING);
+
+        return [
+            'ateliers' => $ateliers,
+            'hebergements' => $hebergements,
+            'restaurations' => $restaurations,
+            'email' => $email
+        ];
+    }
+
 }
